@@ -40,3 +40,4 @@ jobs:
           git add docs/data/*.json
           git diff --cached --quiet && echo "No data changes." || git commit -m "Update NFL data [automated]"
           git push
+
