@@ -2,7 +2,7 @@
 // and bracket simulation with re-seeding, per the current NFL format.
 
 import { sortWithTiebreaks } from './tiebreakers.js';
-import { simulateGame } from './engine.js';
+import { simulateFullGame } from './engine.js';
 
 const DIVISIONS = ['East', 'North', 'South', 'West'];
 
@@ -25,11 +25,9 @@ export function seedConference(conf, standings, teams, rng) {
 }
 
 function playGame(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, neutral = false) {
-  const { homeScore, awayScore } = simulateGame(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, neutral);
-  if (homeScore === awayScore) {
-    // Playoff games can't end in a tie; keep resampling the tied score until one side wins.
-    return playGame(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, neutral);
-  }
+  // Playoff games can't end in a tie: allowTie=false keeps overtime going
+  // (additional 2-possession sudden-death blocks) until someone wins.
+  const { homeScore, awayScore } = simulateFullGame(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, { neutral, allowTie: false });
   return homeScore > awayScore
     ? { winner: homeAbbrev, loser: awayAbbrev, homeScore, awayScore }
     : { winner: awayAbbrev, loser: homeAbbrev, homeScore, awayScore };

@@ -3,6 +3,7 @@
 //   actual score   = nearest-of-10 historical scores to Normal(expected, stdev=8)
 
 import { sampleNormal } from './random.js';
+import { resolveOvertime } from './overtime.js';
 
 const HOME_FIELD_ADV = 1;
 const SCORE_STDEV = 8;
@@ -28,5 +29,26 @@ export function simulateGame(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng,
   const homeScore = scoreSampler.nearestOfN(homeTarget, rng, 10);
   const awayScore = scoreSampler.nearestOfN(awayTarget, rng, 10);
 
-  return { homeScore, awayScore };
+  return { homeScore, awayScore, homeExpected, awayExpected };
+}
+
+// Full game: regulation, then overtime if regulation ends tied.
+// allowTie: true for regular season (an OT that's still tied after both
+// teams get 2 possessions ends the game in a tie); false for playoffs
+// (sudden death keeps going in additional 2-possession blocks).
+export function simulateFullGame(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, { neutral = false, allowTie = true } = {}) {
+  const regulation = simulateGame(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, neutral);
+  if (regulation.homeScore !== regulation.awayScore) {
+    return { homeScore: regulation.homeScore, awayScore: regulation.awayScore, overtime: false, tied: false };
+  }
+
+  const ot = resolveOvertime(
+    regulation.homeScore,
+    regulation.awayScore,
+    regulation.homeExpected,
+    regulation.awayExpected,
+    rng,
+    { allowTie }
+  );
+  return { homeScore: ot.homeScore, awayScore: ot.awayScore, overtime: true, tied: ot.tied };
 }

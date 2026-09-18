@@ -1,7 +1,7 @@
 // Orchestrates one full season simulation: fills in every not-yet-played
 // regular season game, computes final standings, then simulates the playoffs.
 
-import { simulateGame } from './engine.js';
+import { simulateFullGame } from './engine.js';
 import { buildStandings } from './standings.js';
 import { simulatePlayoffs } from './playoffs.js';
 
@@ -12,7 +12,7 @@ export function simulateSeason(schedule, ratings, scoreSampler, rng, teams) {
 
   for (const g of games) {
     if (g.seasonType === 'REG' && !g.completed) {
-      const { homeScore, awayScore } = simulateGame(g.home, g.away, ratings, scoreSampler, rng);
+      const { homeScore, awayScore } = simulateFullGame(g.home, g.away, ratings, scoreSampler, rng, { allowTie: true });
       g.homeScore = homeScore;
       g.awayScore = awayScore;
       g.completed = true;
