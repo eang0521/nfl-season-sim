@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Season Simulator - NFL Season Simulator</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <h1>🏈 NFL Season Simulator</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="season-sim.html" class="active">Season Simulator</a>
+    <a href="predictor.html">Predictor</a>
+  </nav>
+</header>
+<main>
+  <div class="card">
+    <h2>Simulate the rest of the season</h2>
+    <p class="muted" id="intro-text">Loading data&hellip;</p>
+    <button id="simulate-btn" disabled>Simulate</button>
+  </div>
+
+  <div id="results" style="display:none">
+    <div class="card">
+      <h2 id="champion-banner"></h2>
+    </div>
+
+    <div class="card">
+      <h2>Final Standings</h2>
+      <div id="standings"></div>
+    </div>
+
+    <div class="card">
+      <h2>Playoff Bracket</h2>
+      <div id="bracket"></div>
+    </div>
+  </div>
+</main>
+<footer>Ratings from ESPN FPI &middot; Historical scores from nflverse &middot; Not affiliated with the NFL or ESPN</footer>
+<script type="module" src="js/season-sim-ui.js"></script>
+</body>
+</html>

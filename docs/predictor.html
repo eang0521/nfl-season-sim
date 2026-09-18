@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Predictor - NFL Season Simulator</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <h1>🏈 NFL Season Simulator</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="season-sim.html">Season Simulator</a>
+    <a href="predictor.html" class="active">Predictor</a>
+  </nav>
+</header>
+<main>
+  <div class="card">
+    <h2>Playoff Predictor</h2>
+    <p class="muted" id="meta-text">Loading&hellip;</p>
+  </div>
+  <div class="card">
+    <div class="tabs" id="conf-tabs">
+      <button data-conf="AFC" class="active">AFC</button>
+      <button data-conf="NFC">NFC</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Team</th>
+          <th>Make Playoffs</th>
+          <th>Win Division</th>
+          <th>Make Divisional Rd</th>
+          <th>Make Conf. Champ.</th>
+          <th>Make Super Bowl</th>
+          <th>Win Super Bowl</th>
+        </tr>
+      </thead>
+      <tbody id="odds-body"></tbody>
+    </table>
+  </div>
+</main>
+<footer>10,000 simulations per lock-in &middot; Ratings from ESPN FPI &middot; Not affiliated with the NFL or ESPN</footer>
+<script type="module" src="js/predictor-ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "nfl-season-sim",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "NFL season simulator and playoff predictor using ESPN FPI ratings, hosted on GitHub Pages.",
+  "scripts": {
+    "fetch:fpi": "node scripts/fetch-fpi.mjs",
+    "fetch:schedule": "node scripts/fetch-schedule.mjs",
+    "fetch:score-dist": "node scripts/fetch-score-distribution.mjs",
+    "fetch:all": "npm run fetch:fpi && npm run fetch:schedule && npm run fetch:score-dist",
+    "predict": "node scripts/run-predictor.mjs",
+    "update": "npm run fetch:all && node scripts/maybe-run-predictor.mjs"
+  }
+}

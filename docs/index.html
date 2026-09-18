@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NFL Season Simulator</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <h1>🏈 NFL Season Simulator</h1>
+  <nav>
+    <a href="index.html" class="active">Home</a>
+    <a href="season-sim.html">Season Simulator</a>
+    <a href="predictor.html">Predictor</a>
+  </nav>
+</header>
+<main>
+  <div class="card">
+    <h2>What is this?</h2>
+    <p>
+      A simulator built on ESPN's Football Power Index (FPI) offense/defense ratings and the real NFL schedule.
+      Games are scored as <code>22 &plusmn; 1 (home/away) + offense &minus; opponent defense</code>, drawn from a
+      normal distribution (stdev 8), then matched to the nearest of 10 randomly drawn historical NFL scores so
+      results look like real final scores.
+    </p>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h2>Season Simulator</h2>
+      <p class="muted">Simulates the rest of the season once, from today's real results through the Super Bowl. Re-roll for a new outcome.</p>
+      <a class="btn" href="season-sim.html">Simulate a season &rarr;</a>
+    </div>
+    <div class="card">
+      <h2>Predictor</h2>
+      <p class="muted">10,000-simulation odds for every team to make the playoffs, win the division, and win it all &mdash; updated after every real NFL game.</p>
+      <a class="btn" href="predictor.html">View odds &rarr;</a>
+    </div>
+  </div>
+  <div class="card" id="status-card">
+    <h3>Data status</h3>
+    <p class="muted" id="status-text">Loading&hellip;</p>
+  </div>
+</main>
+<footer>Ratings from ESPN FPI &middot; Historical scores from nflverse &middot; Not affiliated with the NFL or ESPN</footer>
+<script type="module">
+  async function loadStatus() {
+    const [fpi, schedule, predictions] = await Promise.all([
+      fetch('data/fpi.json').then(r => r.json()),
+      fetch('data/schedule.json').then(r => r.json()),
+      fetch('data/predictions.json').then(r => r.json()).catch(() => null),
+    ]);
+    const completed = schedule.games.filter(g => g.completed).length;
+    const el = document.getElementById('status-text');
+    const fmt = (iso) => new Date(iso).toLocaleString();
+    el.innerHTML = `
+      FPI ratings updated ${fmt(fpi.updatedAt)}.<br>
+      Schedule: ${completed} / ${schedule.games.length} ${schedule.season} regular season games completed.<br>
+      ${predictions ? `Predictor last locked in after ${predictions.basedOnCompletedGames} completed games (${fmt(predictions.updatedAt)}), from ${predictions.simCount.toLocaleString()} simulations.` : 'Predictor odds not yet generated.'}
+    `;
+  }
+  loadStatus().catch(err => {
+    document.getElementById('status-text').textContent = 'Could not load data: ' + err.message;
+  });
+</script>
+</body>
+</html>
