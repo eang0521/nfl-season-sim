@@ -1,44 +1,36 @@
-// Fetches ESPN's NFL FPI page and extracts each team's FPI/offense/defense
-// ratings from the server-rendered `__espnfitt__` JSON blob embedded in the
-// page HTML (no headless browser needed - it's plain SSR data).
+// Fetches ESPN's NFL Power Index data from their public "fitt" API.
+//
+// Note: www.espn.com/nfl/fpi is behind an AWS WAF JS challenge that a plain
+// fetch() can't pass (it works from a real browser, not from a script or a
+// GitHub Actions runner). This API endpoint serves the same underlying data
+// as plain JSON with no such challenge.
+//
+// The "fpi" category's `values` array isn't self-labeled, but position
+// 0-3 are consistently [fpi, offense, defense, specialTeams] - verified by
+// checking fpi ≈ offense + defense + specialTeams (asserted below).
 
 import fs from 'fs';
 import path from 'path';
 import { dataDir } from './lib/paths.mjs';
 
-const FPI_URL = 'https://www.espn.com/nfl/fpi';
-
-// ESPN's FPI-page abbreviations that differ from our docs/data/teams.json keys.
-const ABBREV_ALIASES = {
-  WAS: 'WSH',
-  LA: 'LAR',
-  JAC: 'JAX',
-};
+const FPI_URL = 'https://site.api.espn.com/apis/fitt/v3/sports/football/nfl/powerindex?limit=1000';
 
 async function main() {
-  const res = await fetch(FPI_URL, {
-    headers: { 'User-Agent': 'Mozilla/5.0 (compatible; nfl-season-sim data fetch)' },
-  });
+  const res = await fetch(FPI_URL);
   if (!res.ok) throw new Error(`ESPN FPI fetch failed: ${res.status}`);
-  const html = await res.text();
-
-  const match = html.match(/window\['__espnfitt__'\]\s*=\s*({.*?});\s*<\/script>/s);
-  if (!match) throw new Error('Could not find __espnfitt__ blob in ESPN FPI page');
-
-  const fitt = JSON.parse(match[1]);
-  const table = fitt.page.content.table;
+  const data = await res.json();
 
   const ratings = {};
-  for (const row of table.stats) {
-    let abbrev = row.team.abbrev.toUpperCase();
-    abbrev = ABBREV_ALIASES[abbrev] || abbrev;
+  for (const row of data.teams) {
+    const abbrev = row.team.abbreviation.toUpperCase();
+    const fpiCategory = row.categories.find((c) => c.name === 'fpi');
+    const [fpi, off, def, st] = fpiCategory.values;
 
-    const statByName = Object.fromEntries(row.stats.map((s) => [s.name, s.value]));
-    ratings[abbrev] = {
-      fpi: Number(statByName.fpi),
-      off: Number(statByName.epaoffense),
-      def: Number(statByName.epadefense),
-    };
+    if (Math.abs(fpi - (off + def + st)) > 0.05) {
+      throw new Error(`FPI sanity check failed for ${abbrev}: ${fpi} != ${off}+${def}+${st}`);
+    }
+
+    ratings[abbrev] = { fpi, off, def };
   }
 
   if (Object.keys(ratings).length < 32) {
