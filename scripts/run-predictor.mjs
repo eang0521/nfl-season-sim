@@ -96,7 +96,7 @@ function main() {
     updatedAt: new Date().toISOString(),
     simCount: SIMULATIONS,
     basedOnCompletedGames: completedCount,
-    fpiUpdatedAt: fpi.updatedAt,
+    fpiRatings: fpi.ratings,
     teams: results,
   };
   fs.writeFileSync(path.join(dataDir, 'predictions.json'), JSON.stringify(out, null, 2));

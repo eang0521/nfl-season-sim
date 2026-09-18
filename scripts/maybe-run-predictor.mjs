@@ -20,9 +20,15 @@ const predictions = readJson('predictions.json');
 
 const completedCount = schedule.games.filter((g) => g.completed).length;
 
+// Compare actual rating values, not fpi.updatedAt - that timestamp changes
+// on every fetch even when the ratings themselves haven't moved.
+const ratingsUnchanged = predictions
+  && predictions.fpiRatings
+  && JSON.stringify(predictions.fpiRatings) === JSON.stringify(fpi.ratings);
+
 const upToDate = predictions
   && predictions.basedOnCompletedGames === completedCount
-  && predictions.fpiUpdatedAt === fpi.updatedAt;
+  && ratingsUnchanged;
 
 if (upToDate) {
   console.log(`Predictions already reflect ${completedCount} completed games and current FPI - skipping.`);
