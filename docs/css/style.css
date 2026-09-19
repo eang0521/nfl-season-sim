@@ -129,3 +129,47 @@ tr.division-winner td:first-child { border-left: 3px solid var(--good); }
 
 footer { text-align: center; color: var(--text-dim); font-size: 12px; padding: 24px; }
 footer a { color: var(--text-dim); }
+
+/* Elo viewer */
+:root {
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --chart-surface: #1a1a19;
+  --chart-grid: #2c2c2a;
+  --chart-axis: #383835;
+}
+
+.team-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+.team-chip {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--panel-alt); border: 1px solid var(--border); border-radius: 999px;
+  padding: 5px 12px 5px 8px; font-size: 13px; cursor: pointer; color: var(--text-dim);
+}
+.team-chip img { width: 16px; height: 16px; object-fit: contain; }
+.team-chip.selected { border-color: var(--series-color, var(--accent)); color: var(--text); background: rgba(79, 140, 255, 0.1); }
+.team-chip .swatch { width: 10px; height: 10px; border-radius: 50%; background: var(--series-color, transparent); visibility: hidden; }
+.team-chip.selected .swatch { visibility: visible; }
+
+.elo-chart-wrap { position: relative; }
+.elo-chart-wrap svg { width: 100%; height: auto; display: block; overflow: visible; }
+.elo-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; font-size: 13px; }
+.elo-legend .item { display: flex; align-items: center; gap: 6px; color: var(--text-dim); }
+.elo-legend .key { width: 16px; height: 2px; border-radius: 1px; }
+
+.elo-tooltip {
+  position: absolute; pointer-events: none; z-index: 5;
+  background: var(--panel-alt); border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 10px; font-size: 12px; min-width: 150px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  transform: translate(-50%, -110%);
+}
+.elo-tooltip .date { color: var(--text-dim); margin-bottom: 4px; }
+.elo-tooltip .row { display: flex; align-items: center; gap: 6px; padding: 1px 0; }
+.elo-tooltip .row .key { width: 12px; height: 2px; flex-shrink: 0; }
+.elo-tooltip .row .val { font-weight: 700; font-variant-numeric: tabular-nums; }
+.elo-tooltip .row .name { color: var(--text-dim); }
+
+.leaderboard-cell { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }

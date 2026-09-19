@@ -8,8 +8,10 @@
     "fetch:fpi": "node scripts/fetch-fpi.mjs",
     "fetch:schedule": "node scripts/fetch-schedule.mjs",
     "fetch:score-dist": "node scripts/fetch-score-distribution.mjs",
-    "fetch:all": "npm run fetch:fpi && npm run fetch:schedule && npm run fetch:score-dist",
+    "fetch:elo-games": "node scripts/fetch-elo-games.mjs",
+    "fetch:all": "npm run fetch:fpi && npm run fetch:schedule && npm run fetch:score-dist && npm run fetch:elo-games",
     "predict": "node scripts/run-predictor.mjs",
-    "update": "npm run fetch:all && node scripts/maybe-run-predictor.mjs"
+    "compute:elo": "node scripts/compute-elo.mjs",
+    "update": "npm run fetch:all && node scripts/maybe-run-predictor.mjs && npm run compute:elo"
   }
 }

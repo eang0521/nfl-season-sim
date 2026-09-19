@@ -27,17 +27,20 @@ jobs:
         with:
           node-version: 22
 
-      - name: Fetch FPI ratings, schedule, and score distribution
+      - name: Fetch FPI ratings, schedule, score distribution, and Elo games
         run: npm run fetch:all
 
       - name: Re-run predictor if new games completed
         run: node scripts/maybe-run-predictor.mjs
 
+      - name: Recompute all-time Elo ratings
+        run: npm run compute:elo
+
       - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/data/*.json
+          git add docs/data
           git diff --cached --quiet && echo "No data changes." || git commit -m "Update NFL data [automated]"
           git push
 

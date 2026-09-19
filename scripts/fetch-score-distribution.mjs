@@ -47,10 +47,9 @@ async function main() {
   for (const row of rows) {
     const season = Number(row.season);
     if (Number.isNaN(season) || season < minSeason) continue;
-    if (row.game_type !== 'REG' && row.game_type !== 'POST' && row.game_type !== 'SB') continue;
+    if (row.home_score === '' || row.away_score === '') continue; // not yet played
     const homeScore = Number(row.home_score);
     const awayScore = Number(row.away_score);
-    if (Number.isNaN(homeScore) || Number.isNaN(awayScore)) continue; // not yet played
 
     counts[homeScore] = (counts[homeScore] || 0) + 1;
     counts[awayScore] = (counts[awayScore] || 0) + 1;

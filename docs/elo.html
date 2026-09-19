@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All-Time Elo - NFL Season Simulator</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <h1>🏈 NFL Season Simulator</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="season-sim.html">Season Simulator</a>
+    <a href="predictor.html">Predictor</a>
+    <a href="elo.html" class="active">All-Time Elo</a>
+  </nav>
+</header>
+<main>
+  <div class="card">
+    <h2>All-Time Elo Ratings</h2>
+    <p class="muted" id="intro-text">Loading&hellip;</p>
+  </div>
+
+  <div class="card">
+    <h2>Current Ratings</h2>
+    <p class="muted" style="margin: -6px 0 10px">Click a column header to sort.</p>
+    <div class="table-scroll">
+      <table id="leaderboard-table">
+        <thead>
+          <tr id="leaderboard-header">
+            <th data-key="name">Team</th>
+            <th data-key="elo">Current Elo</th>
+            <th data-key="peakElo">Peak Elo</th>
+            <th data-key="peakDate">Peak Date</th>
+            <th data-key="gamesPlayed">Games Played</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Rating History</h2>
+    <p class="muted" style="margin-top: -6px">Select up to 5 teams (current or historical) to compare.</p>
+    <div class="team-picker" id="team-picker"></div>
+    <div class="elo-chart-wrap" id="chart-wrap" style="margin-top: 16px">
+      <p class="muted" id="chart-placeholder">Pick a team above to see its Elo history.</p>
+    </div>
+  </div>
+</main>
+<footer>Elo methodology inspired by FiveThirtyEight's NFL Elo model &middot; Historical data 1920-2020 via fivethirtyeight/nfl-elo-game, current via nflverse &middot; Not affiliated with the NFL or ESPN</footer>
+<script type="module" src="js/elo-ui.js"></script>
+</body>
+</html>
