@@ -12,9 +12,21 @@ function formatRecord(p) {
   return t >= 0.1 ? `${w}-${l}-${t}` : `${w}-${l}`;
 }
 
+// Heat-map fill: white at 0% to dark blue at 100%, with text color flipped
+// to stay readable once the background gets dark.
+function pctColor(pct) {
+  const t = Math.min(1, Math.max(0, pct));
+  const from = [255, 255, 255];
+  const to = [8, 48, 107]; // dark blue
+  const rgb = from.map((c, i) => Math.round(c + t * (to[i] - c)));
+  const luminance = 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2];
+  return { bg: `rgb(${rgb.join(',')})`, fg: luminance > 140 ? '#0b0e14' : '#ffffff' };
+}
+
 function pctCell(pct) {
   const p = Math.round(pct * 1000) / 10; // one decimal
-  return `<td data-sort-value="${pct}"><div class="pct-bar-wrap"><div class="pct-bar"><span style="width:${p}%"></span></div><span class="pct-num">${p}%</span></div></td>`;
+  const { bg, fg } = pctColor(pct);
+  return `<td class="pct-cell" style="background-color:${bg};color:${fg}">${p}%</td>`;
 }
 
 function teamRow(abbrev) {

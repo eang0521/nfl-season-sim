@@ -78,11 +78,25 @@ button, .btn {
 button:disabled { opacity: 0.5; cursor: default; }
 button:hover:not(:disabled) { filter: brightness(1.1); }
 
+.table-scroll { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
 th { color: var(--text-dim); font-weight: 600; font-size: 12px; text-transform: uppercase; }
 th.sorted { color: var(--accent); }
 th[data-key]:hover { color: var(--text); }
+
+.odds-table { table-layout: fixed; min-width: 720px; }
+.odds-table th { white-space: normal; line-height: 1.3; }
+.odds-table th:nth-child(1), .odds-table td:nth-child(1) { width: 23%; }
+.odds-table th:nth-child(2), .odds-table td:nth-child(2) { width: 11%; }
+.odds-table th:nth-child(n+3), .odds-table td:nth-child(n+3) { width: 11%; }
+.odds-table td.pct-cell {
+  text-align: center;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 tr.playoff-team { background: rgba(79, 140, 255, 0.08); }
 tr.division-winner td:first-child { border-left: 3px solid var(--good); }
 
@@ -107,11 +121,6 @@ tr.division-winner td:first-child { border-left: 3px solid var(--good); }
 .bracket-game .row { display: flex; justify-content: space-between; padding: 2px 0; }
 .bracket-game .winner { color: var(--good); font-weight: 700; }
 .bracket-game .loser { color: var(--text-dim); }
-
-.pct-bar-wrap { display: flex; align-items: center; gap: 8px; }
-.pct-bar { position: relative; background: var(--panel-alt); border-radius: 4px; height: 6px; width: 60px; overflow: hidden; }
-.pct-bar > span { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); }
-.pct-num { font-variant-numeric: tabular-nums; width: 42px; text-align: right; }
 
 .tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
 .tabs button { background: var(--panel-alt); color: var(--text-dim); font-weight: 600; }
