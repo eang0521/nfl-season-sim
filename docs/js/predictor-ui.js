@@ -58,7 +58,7 @@ function teamsForCurrentTab() {
 function sortValue(abbrev, key) {
   const p = predictions.teams[abbrev];
   if (key === 'name') return teams[abbrev].name;
-  if (key === 'division') return divisionLabel(abbrev) + teams[abbrev].name; // divisions group, then alphabetical within
+  if (key === 'division') return divisionLabel(abbrev);
   if (key === 'record') return p.projectedWins - p.projectedLosses;
   return p[key];
 }
@@ -82,8 +82,13 @@ function render() {
     const sorted = [...list].sort((a, b) => {
       const va = sortValue(a, sort.key);
       const vb = sortValue(b, sort.key);
-      if (typeof va === 'string') return sort.dir * va.localeCompare(vb);
-      return sort.dir * (va - vb);
+      const primary = typeof va === 'string' ? sort.dir * va.localeCompare(vb) : sort.dir * (va - vb);
+      if (primary !== 0) return primary;
+      if (sort.key === 'division') {
+        // Tiebreaker within a division: best playoff odds first, regardless of sort direction.
+        return predictions.teams[b].madePlayoffsPct - predictions.teams[a].madePlayoffsPct;
+      }
+      return 0;
     });
     tbody.innerHTML = sorted.map(teamRow).join('');
   }
