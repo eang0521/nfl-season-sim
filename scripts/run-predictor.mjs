@@ -35,12 +35,22 @@ function main() {
       wonSuperBowl: 0,
       seedSum: 0,
       missedPlayoffsCount: 0,
+      winsSum: 0,
+      lossesSum: 0,
+      tiesSum: 0,
     };
   }
 
   for (let i = 0; i < SIMULATIONS; i++) {
     const rng = makeRng(randomSeed());
-    const { playoffs } = simulateSeason(schedule, fpi.ratings, scoreSampler, rng, teams);
+    const { standings, playoffs } = simulateSeason(schedule, fpi.ratings, scoreSampler, rng, teams);
+
+    for (const abbrev of Object.keys(teams)) {
+      const rec = standings[abbrev];
+      tally[abbrev].winsSum += rec.wins;
+      tally[abbrev].lossesSum += rec.losses;
+      tally[abbrev].tiesSum += rec.ties;
+    }
 
     const seedByAbbrev = {};
     playoffs.afcSeeds.forEach((a, idx) => { seedByAbbrev[a] = idx + 1; });
@@ -89,6 +99,9 @@ function main() {
       madeSuperBowlPct: t.madeSuperBowl / SIMULATIONS,
       wonSuperBowlPct: t.wonSuperBowl / SIMULATIONS,
       avgSeedIfMadePlayoffs: t.madePlayoffs ? t.seedSum / t.madePlayoffs : null,
+      projectedWins: t.winsSum / SIMULATIONS,
+      projectedLosses: t.lossesSum / SIMULATIONS,
+      projectedTies: t.tiesSum / SIMULATIONS,
     };
   }
 

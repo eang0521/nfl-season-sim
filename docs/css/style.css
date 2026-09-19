@@ -81,6 +81,8 @@ button:hover:not(:disabled) { filter: brightness(1.1); }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
 th { color: var(--text-dim); font-weight: 600; font-size: 12px; text-transform: uppercase; }
+th.sorted { color: var(--accent); }
+th[data-key]:hover { color: var(--text); }
 tr.playoff-team { background: rgba(79, 140, 255, 0.08); }
 tr.division-winner td:first-child { border-left: 3px solid var(--good); }
 

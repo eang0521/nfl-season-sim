@@ -22,19 +22,22 @@
   </div>
   <div class="card">
     <div class="tabs" id="conf-tabs">
-      <button data-conf="AFC" class="active">AFC</button>
+      <button data-conf="ALL" class="active">All</button>
+      <button data-conf="AFC">AFC</button>
       <button data-conf="NFC">NFC</button>
     </div>
+    <p class="muted" style="margin: -6px 0 10px">Click a column header to sort.</p>
     <table>
       <thead>
-        <tr>
-          <th>Team</th>
-          <th>Make Playoffs</th>
-          <th>Win Division</th>
-          <th>Make Divisional Rd</th>
-          <th>Make Conf. Champ.</th>
-          <th>Make Super Bowl</th>
-          <th>Win Super Bowl</th>
+        <tr id="odds-header">
+          <th data-key="name">Team</th>
+          <th data-key="record">Proj. Record</th>
+          <th data-key="wonDivisionPct">Win Division</th>
+          <th data-key="madePlayoffsPct">Make Playoffs</th>
+          <th data-key="madeDivisionalPct">Make Divisional Rd</th>
+          <th data-key="madeConfChampPct">Make Conf. Champ.</th>
+          <th data-key="madeSuperBowlPct">Make Super Bowl</th>
+          <th data-key="wonSuperBowlPct">Win Super Bowl</th>
         </tr>
       </thead>
       <tbody id="odds-body"></tbody>
