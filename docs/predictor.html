@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Predictor - NFL Season Simulator</title>
 <link rel="stylesheet" href="css/style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('nfl-sim-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
 </head>
 <body>
 <header>
@@ -14,6 +22,7 @@
     <a href="season-sim.html">Season Simulator</a>
     <a href="predictor.html" class="active">Predictor</a>
     <a href="elo.html">All-Time Elo</a>
+    <button id="theme-toggle" class="theme-toggle"></button>
   </nav>
 </header>
 <main>

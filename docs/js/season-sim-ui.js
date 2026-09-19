@@ -1,6 +1,9 @@
 import { makeRng, randomSeed } from '../sim/random.js';
 import { buildScoreSampler } from '../sim/scoreDistribution.js';
 import { simulateSeason } from '../sim/season.js';
+import { initThemeToggle } from './theme.js';
+
+initThemeToggle(document.getElementById('theme-toggle'));
 
 const DIVISIONS = ['East', 'North', 'South', 'West'];
 const CONFS = ['AFC', 'NFC'];

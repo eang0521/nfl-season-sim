@@ -1,3 +1,7 @@
+import { initThemeToggle, getEffectiveTheme } from './theme.js';
+
+initThemeToggle(document.getElementById('theme-toggle'));
+
 const MAX_SELECTED = 5;
 // Last-resort palette for teams with no known colors (historical/defunct
 // teams) or once a team's own colors are all taken by earlier selections.
@@ -41,22 +45,74 @@ function colorDistance(hexA, hexB) {
   return Math.sqrt((a.r - b.r) ** 2 + (a.g - b.g) ** 2 + (a.b - b.b) ** 2);
 }
 
-// Assigns each selected team a color: its own primary color by default;
-// if that's too close to an earlier-selected team's assigned color, its
+function hexToHsl(hex) {
+  const { r, g, b } = hexToRgb(hex);
+  const rN = r / 255, gN = g / 255, bN = b / 255;
+  const max = Math.max(rN, gN, bN), min = Math.min(rN, gN, bN);
+  const l = (max + min) / 2;
+  let h = 0, s = 0;
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case rN: h = (gN - bN) / d + (gN < bN ? 6 : 0); break;
+      case gN: h = (bN - rN) / d + 2; break;
+      default: h = (rN - gN) / d + 4; break;
+    }
+    h *= 60;
+  }
+  return { h, s: s * 100, l: l * 100 };
+}
+
+function hslToHex(h, s, l) {
+  s /= 100; l /= 100;
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+  const m = l - c / 2;
+  let rgb;
+  if (h < 60) rgb = [c, x, 0];
+  else if (h < 120) rgb = [x, c, 0];
+  else if (h < 180) rgb = [0, c, x];
+  else if (h < 240) rgb = [0, x, c];
+  else if (h < 300) rgb = [x, 0, c];
+  else rgb = [c, 0, x];
+  const toHex = (v) => Math.round((v + m) * 255).toString(16).padStart(2, '0');
+  return `#${toHex(rgb[0])}${toHex(rgb[1])}${toHex(rgb[2])}`;
+}
+
+const MIN_LIGHTNESS_DARK = 42; // floor for a color's lightness on a dark surface
+const MAX_LIGHTNESS_LIGHT = 62; // ceiling for a color's lightness on a light surface
+
+// Nudges a color's lightness so it stays visible against the current
+// theme's chart surface - a near-black navy is invisible on a dark
+// background; a pale gold washes out on a light one. Preserves hue so the
+// color still reads as "that team's color", just lifted/dropped in
+// lightness. Achromatic colors (black/white/gray) stay achromatic.
+function ensureVisible(hex, theme) {
+  const { h, s, l } = hexToHsl(hex);
+  const boostedS = s === 0 ? 0 : Math.max(s, 45);
+  if (theme === 'dark' && l < MIN_LIGHTNESS_DARK) return hslToHex(h, boostedS, MIN_LIGHTNESS_DARK);
+  if (theme === 'light' && l > MAX_LIGHTNESS_LIGHT) return hslToHex(h, boostedS, MAX_LIGHTNESS_LIGHT);
+  return hex;
+}
+
+// Assigns each selected team a color: its own primary color by default
+// (adjusted for visibility against the current theme's chart surface); if
+// that's too close to an earlier-selected team's assigned color, its
 // secondary color; if that's also taken, the next unused fallback color.
-function assignSeriesColors(codes) {
+function assignSeriesColors(codes, theme) {
   const used = [];
   const result = {};
   let fallbackIdx = 0;
   for (const code of codes) {
     const m = teamsMeta[code];
-    const candidates = [m.color, m.secondaryColor].filter(Boolean);
+    const candidates = [m.color, m.secondaryColor].filter(Boolean).map((c) => ensureVisible(c, theme));
     let chosen = candidates.find((c) => !used.some((u) => colorDistance(u, c) < COLLISION_THRESHOLD));
     while (!chosen && fallbackIdx < FALLBACK_PALETTE.length) {
-      const candidate = FALLBACK_PALETTE[fallbackIdx++];
+      const candidate = ensureVisible(FALLBACK_PALETTE[fallbackIdx++], theme);
       if (!used.some((u) => colorDistance(u, candidate) < COLLISION_THRESHOLD)) chosen = candidate;
     }
-    if (!chosen) chosen = candidates[candidates.length - 1] || FALLBACK_PALETTE[codes.indexOf(code) % FALLBACK_PALETTE.length];
+    if (!chosen) chosen = candidates[candidates.length - 1] || ensureVisible(FALLBACK_PALETTE[codes.indexOf(code) % FALLBACK_PALETTE.length], theme);
     used.push(chosen);
     result[code] = chosen;
   }
@@ -163,7 +219,7 @@ function toggleTeam(code, forceAdd = false) {
     if (selected.length >= MAX_SELECTED) selected.shift();
     selected.push(code);
   }
-  selectedColors = assignSeriesColors(selected);
+  selectedColors = assignSeriesColors(selected, getEffectiveTheme());
   renderTeamPicker();
   renderChart();
 }
@@ -331,11 +387,20 @@ async function main() {
 
   // Default to the current #1 team so the chart isn't empty on first load.
   selected = [activeCodesSortedByElo()[0]];
-  selectedColors = assignSeriesColors(selected);
+  selectedColors = assignSeriesColors(selected, getEffectiveTheme());
   renderTeamPicker();
   renderChart();
 }
 
 main().catch((err) => {
   document.getElementById('intro-text').textContent = 'Failed to load Elo data: ' + err.message;
+});
+
+// Recompute colors (they're picked for visibility against the current
+// theme's chart surface) whenever the theme toggle changes.
+window.addEventListener('themechange', () => {
+  if (selected.length === 0) return;
+  selectedColors = assignSeriesColors(selected, getEffectiveTheme());
+  renderTeamPicker();
+  renderChart();
 });

@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NFL Season Simulator</title>
 <link rel="stylesheet" href="css/style.css">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('nfl-sim-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
 </head>
 <body>
 <header>
@@ -14,6 +22,7 @@
     <a href="season-sim.html">Season Simulator</a>
     <a href="predictor.html">Predictor</a>
     <a href="elo.html">All-Time Elo</a>
+    <button id="theme-toggle" class="theme-toggle"></button>
   </nav>
 </header>
 <main>
@@ -45,6 +54,9 @@
 </main>
 <footer>Ratings from ESPN FPI &middot; Historical scores from nflverse &middot; Not affiliated with the NFL or ESPN</footer>
 <script type="module">
+  import { initThemeToggle } from './js/theme.js';
+  initThemeToggle(document.getElementById('theme-toggle'));
+
   async function loadStatus() {
     const [fpi, schedule, predictions] = await Promise.all([
       fetch('data/fpi.json').then(r => r.json()),

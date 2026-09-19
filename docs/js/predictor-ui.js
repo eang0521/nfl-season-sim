@@ -1,3 +1,7 @@
+import { initThemeToggle } from './theme.js';
+
+initThemeToggle(document.getElementById('theme-toggle'));
+
 const DIVISIONS = ['East', 'North', 'South', 'West'];
 const CONFS_FOR_TAB = { ALL: ['AFC', 'NFC'], AFC: ['AFC'], NFC: ['NFC'] };
 
