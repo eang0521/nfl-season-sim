@@ -1,12 +1,19 @@
-const SERIES_COLORS = ['var(--series-1)', 'var(--series-2)', 'var(--series-3)', 'var(--series-4)', 'var(--series-5)'];
 const MAX_SELECTED = 5;
+// Last-resort palette for teams with no known colors (historical/defunct
+// teams) or once a team's own colors are all taken by earlier selections.
+const FALLBACK_PALETTE = ['#3987e5', '#d95926', '#199e70', '#c98500', '#d55181'];
+// Colors closer than this (Euclidean RGB distance, max ~441) are treated as
+// a collision - i.e. an already-selected team is using essentially the same
+// color (e.g. the Rams and Cowboys share the exact same blue, #003594).
+const COLLISION_THRESHOLD = 45;
 
 // Codes used by the Elo dataset that differ from docs/data/teams.json's keys.
 const CODE_TO_TEAMS_KEY = { OAK: 'LV' };
 
-let teamsMeta = {}; // resolved: { code: { name, logo, active } }
+let teamsMeta = {}; // resolved: { code: { name, logo, active, color, secondaryColor } }
 let ratings; // ratings.json contents
 let selected = [];
+let selectedColors = {}; // code -> resolved hex color for the current `selected` set
 let leaderboardSort = { key: 'elo', dir: -1 };
 
 function resolveTeamsMeta(teams, eloTeamNames) {
@@ -14,7 +21,7 @@ function resolveTeamsMeta(teams, eloTeamNames) {
   for (const code of Object.keys(ratings.current)) {
     const teamsKey = CODE_TO_TEAMS_KEY[code] || code;
     if (teams[teamsKey]) {
-      meta[code] = { name: teams[teamsKey].name, logo: teams[teamsKey].logo, active: true };
+      meta[code] = { name: teams[teamsKey].name, logo: teams[teamsKey].logo, active: true, color: teams[teamsKey].color, secondaryColor: teams[teamsKey].secondaryColor };
     } else if (eloTeamNames && eloTeamNames[code] && eloTeamNames[code].displayName) {
       meta[code] = { name: eloTeamNames[code].displayName, logo: null, active: false };
     } else {
@@ -22,6 +29,38 @@ function resolveTeamsMeta(teams, eloTeamNames) {
     }
   }
   return meta;
+}
+
+function hexToRgb(hex) {
+  const h = hex.replace('#', '');
+  return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16) };
+}
+
+function colorDistance(hexA, hexB) {
+  const a = hexToRgb(hexA), b = hexToRgb(hexB);
+  return Math.sqrt((a.r - b.r) ** 2 + (a.g - b.g) ** 2 + (a.b - b.b) ** 2);
+}
+
+// Assigns each selected team a color: its own primary color by default;
+// if that's too close to an earlier-selected team's assigned color, its
+// secondary color; if that's also taken, the next unused fallback color.
+function assignSeriesColors(codes) {
+  const used = [];
+  const result = {};
+  let fallbackIdx = 0;
+  for (const code of codes) {
+    const m = teamsMeta[code];
+    const candidates = [m.color, m.secondaryColor].filter(Boolean);
+    let chosen = candidates.find((c) => !used.some((u) => colorDistance(u, c) < COLLISION_THRESHOLD));
+    while (!chosen && fallbackIdx < FALLBACK_PALETTE.length) {
+      const candidate = FALLBACK_PALETTE[fallbackIdx++];
+      if (!used.some((u) => colorDistance(u, candidate) < COLLISION_THRESHOLD)) chosen = candidate;
+    }
+    if (!chosen) chosen = candidates[candidates.length - 1] || FALLBACK_PALETTE[codes.indexOf(code) % FALLBACK_PALETTE.length];
+    used.push(chosen);
+    result[code] = chosen;
+  }
+  return result;
 }
 
 function activeCodesSortedByElo() {
@@ -107,9 +146,9 @@ function renderTeamPicker() {
 
 function chipHtml(code) {
   const m = teamsMeta[code];
-  const idx = selected.indexOf(code);
-  const color = idx >= 0 ? SERIES_COLORS[idx] : null;
-  return `<div class="team-chip ${idx >= 0 ? 'selected' : ''}" data-code="${code}" style="${color ? `--series-color:${color}` : ''}">
+  const isSelected = selected.includes(code);
+  const color = selectedColors[code] || null;
+  return `<div class="team-chip ${isSelected ? 'selected' : ''}" data-code="${code}" style="${color ? `--series-color:${color}` : ''}">
     <span class="swatch"></span>
     ${m.logo ? `<img src="${m.logo}" alt="">` : ''}
     <span>${m.name}</span>
@@ -124,6 +163,7 @@ function toggleTeam(code, forceAdd = false) {
     if (selected.length >= MAX_SELECTED) selected.shift();
     selected.push(code);
   }
+  selectedColors = assignSeriesColors(selected);
   renderTeamPicker();
   renderChart();
 }
@@ -200,8 +240,8 @@ function renderChart() {
   }
 
   // lines + end markers
-  series.forEach((s, i) => {
-    const color = SERIES_COLORS[i];
+  series.forEach((s) => {
+    const color = selectedColors[s.code];
     const d = s.points.map((p, j) => `${j === 0 ? 'M' : 'L'} ${xScale(p.date).toFixed(1)} ${yScale(p.elo).toFixed(1)}`).join(' ');
     svg += `<path d="${d}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
     const last = s.points[s.points.length - 1];
@@ -213,7 +253,7 @@ function renderChart() {
   svg += '</svg>';
 
   const legend = selected.length > 1
-    ? `<div class="elo-legend">${selected.map((code, i) => `<div class="item"><span class="key" style="background:${SERIES_COLORS[i]}"></span><span>${teamsMeta[code].name}</span></div>`).join('')}</div>`
+    ? `<div class="elo-legend">${selected.map((code) => `<div class="item"><span class="key" style="background:${selectedColors[code]}"></span><span>${teamsMeta[code].name}</span></div>`).join('')}</div>`
     : '';
 
   wrap.innerHTML = `${svg}${legend}<div class="elo-tooltip" id="elo-tooltip" style="display:none"></div>`;
@@ -249,9 +289,9 @@ function wireChartHover(series, xScale, minTs, maxTs) {
     crosshair.setAttribute('x1', svgX.toFixed(1));
     crosshair.setAttribute('x2', svgX.toFixed(1));
 
-    const rows = series.map((s, i) => {
+    const rows = series.map((s) => {
       const p = nearestPointAtOrBefore(s.points, ts);
-      return { code: s.code, color: SERIES_COLORS[i], date: p.date, elo: p.elo };
+      return { code: s.code, color: selectedColors[s.code], date: p.date, elo: p.elo };
     });
     const dateLabel = rows[0] ? rows[0].date : '';
 
@@ -291,6 +331,7 @@ async function main() {
 
   // Default to the current #1 team so the chart isn't empty on first load.
   selected = [activeCodesSortedByElo()[0]];
+  selectedColors = assignSeriesColors(selected);
   renderTeamPicker();
   renderChart();
 }

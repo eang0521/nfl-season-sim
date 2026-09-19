@@ -132,11 +132,6 @@ footer a { color: var(--text-dim); }
 
 /* Elo viewer */
 :root {
-  --series-1: #3987e5;
-  --series-2: #d95926;
-  --series-3: #199e70;
-  --series-4: #c98500;
-  --series-5: #d55181;
   --chart-surface: #1a1a19;
   --chart-grid: #2c2c2a;
   --chart-axis: #383835;
