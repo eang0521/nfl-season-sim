@@ -29,11 +29,17 @@ function pctCell(pct) {
   return `<td class="pct-cell" style="background-color:${bg};color:${fg}">${p}%</td>`;
 }
 
+function divisionLabel(abbrev) {
+  const t = teams[abbrev];
+  return `${t.conf} ${t.div}`;
+}
+
 function teamRow(abbrev) {
   const t = teams[abbrev];
   const p = predictions.teams[abbrev];
   return `<tr>
     <td><div class="team-cell"><img src="${t.logo}" alt=""><span>${t.name}</span></div></td>
+    <td>${divisionLabel(abbrev)}</td>
     <td>${formatRecord(p)}</td>
     ${pctCell(p.wonDivisionPct)}
     ${pctCell(p.madePlayoffsPct)}
@@ -52,6 +58,7 @@ function teamsForCurrentTab() {
 function sortValue(abbrev, key) {
   const p = predictions.teams[abbrev];
   if (key === 'name') return teams[abbrev].name;
+  if (key === 'division') return divisionLabel(abbrev) + teams[abbrev].name; // divisions group, then alphabetical within
   if (key === 'record') return p.projectedWins - p.projectedLosses;
   return p[key];
 }
@@ -119,8 +126,8 @@ async function main() {
       if (sort && sort.key === key) {
         sort.dir *= -1;
       } else {
-        // Percentages/records default to descending (best first); name defaults ascending.
-        sort = { key, dir: key === 'name' ? 1 : -1 };
+        // Percentages/records default to descending (best first); name/division default ascending.
+        sort = { key, dir: key === 'name' || key === 'division' ? 1 : -1 };
       }
       render();
     });
