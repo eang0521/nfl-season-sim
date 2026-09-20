@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-09-20T19:18:46.763Z",
+  "updatedAt": "2026-09-20T23:05:06.651Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -179,103 +179,15 @@
       "awayScore": 10
     },
     {
-      "id": "2026_02_CAR_ATL",
-      "week": 2,
-      "seasonType": "REG",
-      "date": "2026-09-20T17:00Z",
-      "home": "ATL",
-      "away": "CAR",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_02_MIN_CHI",
-      "week": 2,
-      "seasonType": "REG",
-      "date": "2026-09-20T17:00Z",
-      "home": "CHI",
-      "away": "MIN",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_02_PHI_TEN",
-      "week": 2,
-      "seasonType": "REG",
-      "date": "2026-09-20T17:00Z",
-      "home": "TEN",
-      "away": "PHI",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_02_PIT_NE",
-      "week": 2,
-      "seasonType": "REG",
-      "date": "2026-09-20T17:00Z",
-      "home": "NE",
-      "away": "PIT",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_02_GB_NYJ",
-      "week": 2,
-      "seasonType": "REG",
-      "date": "2026-09-20T17:00Z",
-      "home": "NYJ",
-      "away": "GB",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_02_CLE_TB",
-      "week": 2,
-      "seasonType": "REG",
-      "date": "2026-09-20T17:00Z",
-      "home": "TB",
-      "away": "CLE",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_02_NO_BAL",
-      "week": 2,
-      "seasonType": "REG",
-      "date": "2026-09-20T17:00Z",
-      "home": "BAL",
-      "away": "NO",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_02_CIN_HOU",
-      "week": 2,
-      "seasonType": "REG",
-      "date": "2026-09-20T17:00Z",
-      "home": "HOU",
-      "away": "CIN",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
       "id": "2026_02_JAX_DEN",
       "week": 2,
       "seasonType": "REG",
       "date": "2026-09-20T20:05Z",
       "home": "DEN",
       "away": "JAX",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "completed": true,
+      "homeScore": 20,
+      "awayScore": 13
     },
     {
       "id": "2026_02_LV_LAC",
@@ -320,6 +232,94 @@
       "completed": false,
       "homeScore": null,
       "awayScore": null
+    },
+    {
+      "id": "2026_02_CAR_ATL",
+      "week": 2,
+      "seasonType": "REG",
+      "date": "2026-09-20T17:00Z",
+      "home": "ATL",
+      "away": "CAR",
+      "completed": true,
+      "homeScore": 3,
+      "awayScore": 34
+    },
+    {
+      "id": "2026_02_MIN_CHI",
+      "week": 2,
+      "seasonType": "REG",
+      "date": "2026-09-20T17:00Z",
+      "home": "CHI",
+      "away": "MIN",
+      "completed": true,
+      "homeScore": 3,
+      "awayScore": 9
+    },
+    {
+      "id": "2026_02_PHI_TEN",
+      "week": 2,
+      "seasonType": "REG",
+      "date": "2026-09-20T17:00Z",
+      "home": "TEN",
+      "away": "PHI",
+      "completed": true,
+      "homeScore": 20,
+      "awayScore": 24
+    },
+    {
+      "id": "2026_02_PIT_NE",
+      "week": 2,
+      "seasonType": "REG",
+      "date": "2026-09-20T17:00Z",
+      "home": "NE",
+      "away": "PIT",
+      "completed": true,
+      "homeScore": 20,
+      "awayScore": 3
+    },
+    {
+      "id": "2026_02_GB_NYJ",
+      "week": 2,
+      "seasonType": "REG",
+      "date": "2026-09-20T17:00Z",
+      "home": "NYJ",
+      "away": "GB",
+      "completed": true,
+      "homeScore": 17,
+      "awayScore": 20
+    },
+    {
+      "id": "2026_02_CLE_TB",
+      "week": 2,
+      "seasonType": "REG",
+      "date": "2026-09-20T17:00Z",
+      "home": "TB",
+      "away": "CLE",
+      "completed": true,
+      "homeScore": 19,
+      "awayScore": 23
+    },
+    {
+      "id": "2026_02_NO_BAL",
+      "week": 2,
+      "seasonType": "REG",
+      "date": "2026-09-20T17:00Z",
+      "home": "BAL",
+      "away": "NO",
+      "completed": true,
+      "homeScore": 17,
+      "awayScore": 24
+    },
+    {
+      "id": "2026_02_CIN_HOU",
+      "week": 2,
+      "seasonType": "REG",
+      "date": "2026-09-20T17:00Z",
+      "home": "HOU",
+      "away": "CIN",
+      "completed": true,
+      "homeScore": 6,
+      "awayScore": 20
     },
     {
       "id": "2026_02_IND_KC",
