@@ -202,6 +202,7 @@ footer a { color: var(--text-dim); }
 .elo-chart-wrap { position: relative; }
 .elo-chart-wrap svg { width: 100%; height: auto; display: block; overflow: visible; }
 .elo-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; font-size: 13px; }
+#zoom-hint { margin: 8px 0 0; }
 .elo-legend .item { display: flex; align-items: center; gap: 6px; color: var(--text-dim); }
 .elo-legend .key { width: 16px; height: 2px; border-radius: 1px; }
 

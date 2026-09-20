@@ -18,6 +18,7 @@ let teamsMeta = {}; // resolved: { code: { name, logo, active, color, secondaryC
 let ratings; // ratings.json contents
 let selected = [];
 let selectedColors = {}; // code -> resolved hex color for the current `selected` set
+let zoomDomain = null; // { start, end } (ms epoch) - null means "full history"
 let leaderboardSort = { key: 'elo', dir: -1 };
 
 function resolveTeamsMeta(teams, eloTeamNames) {
@@ -238,6 +239,26 @@ function niceStep(range, targetTicks) {
   return step * mag;
 }
 
+// Returns the slice of a (chronologically sorted) points array visible in
+// [minTs, maxTs], including one point just before minTs (if any) so a
+// zoomed-in line enters the view at the correct value instead of
+// appearing to start wherever the first in-window game happens to be.
+function pointsForDomain(points, minTs, maxTs) {
+  let lo = 0, hi = points.length;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (new Date(points[mid].date).getTime() < minTs) lo = mid + 1; else hi = mid;
+  }
+  const startIdx = Math.max(0, lo - 1);
+  let endIdx = startIdx;
+  while (endIdx < points.length && new Date(points[endIdx].date).getTime() <= maxTs) endIdx++;
+  return points.slice(startIdx, Math.max(endIdx, startIdx + 1));
+}
+
+function fmtTs(ts) {
+  return new Date(ts).toISOString().slice(0, 10);
+}
+
 function renderChart() {
   const wrap = document.getElementById('chart-wrap');
   if (selected.length === 0) {
@@ -245,19 +266,27 @@ function renderChart() {
     return;
   }
 
-  const series = selected.map((code) => ({ code, points: ratings.trajectories[code] }));
-  const allDates = series.flatMap((s) => s.points.map((p) => p.date));
+  const fullSeries = selected.map((code) => ({ code, points: ratings.trajectories[code] }));
+
+  let minTs, maxTs;
+  if (zoomDomain) {
+    ({ start: minTs, end: maxTs } = zoomDomain);
+  } else {
+    const allDates = fullSeries.flatMap((s) => s.points.map((p) => p.date));
+    minTs = new Date(allDates.reduce((a, b) => (a < b ? a : b))).getTime();
+    maxTs = new Date(allDates.reduce((a, b) => (a > b ? a : b))).getTime();
+  }
+
+  // Points actually drawn, restricted to the current (possibly zoomed) window.
+  const series = fullSeries.map((s) => ({ code: s.code, points: pointsForDomain(s.points, minTs, maxTs) }));
+
   const allElos = series.flatMap((s) => s.points.map((p) => p.elo));
-  const minDate = allDates.reduce((a, b) => (a < b ? a : b));
-  const maxDate = allDates.reduce((a, b) => (a > b ? a : b));
   const minElo = Math.min(...allElos);
   const maxElo = Math.max(...allElos);
   const eloPad = Math.max(20, (maxElo - minElo) * 0.08);
   const yMin = minElo - eloPad;
   const yMax = maxElo + eloPad;
 
-  const minTs = new Date(minDate).getTime();
-  const maxTs = new Date(maxDate).getTime();
   const xScale = (date) => {
     const t = new Date(date).getTime();
     return MARGIN.left + ((t - minTs) / (maxTs - minTs || 1)) * (CHART_W - MARGIN.left - MARGIN.right);
@@ -273,8 +302,8 @@ function renderChart() {
   for (let v = Math.ceil(yMin / yStep) * yStep; v <= yMax; v += yStep) yTicks.push(Math.round(v));
 
   // X gridlines at nice year intervals.
-  const minYear = new Date(minDate).getFullYear();
-  const maxYear = new Date(maxDate).getFullYear();
+  const minYear = new Date(minTs).getFullYear();
+  const maxYear = new Date(maxTs).getFullYear();
   const yearStep = Math.max(1, niceStep(maxYear - minYear, 8));
   const xTicks = [];
   for (let y = Math.ceil(minYear / yearStep) * yearStep; y <= maxYear; y += yearStep) xTicks.push(y);
@@ -297,6 +326,7 @@ function renderChart() {
 
   // lines + end markers
   series.forEach((s) => {
+    if (s.points.length === 0) return;
     const color = selectedColors[s.code];
     const d = s.points.map((p, j) => `${j === 0 ? 'M' : 'L'} ${xScale(p.date).toFixed(1)} ${yScale(p.elo).toFixed(1)}`).join(' ');
     svg += `<path d="${d}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
@@ -305,24 +335,34 @@ function renderChart() {
   });
 
   svg += `<line id="elo-crosshair" x1="0" y1="${MARGIN.top}" x2="0" y2="${axisY}" stroke="var(--chart-axis)" stroke-width="1" style="display:none"/>`;
-  svg += `<rect id="elo-hover-target" x="${MARGIN.left}" y="${MARGIN.top}" width="${CHART_W - MARGIN.left - MARGIN.right}" height="${axisY - MARGIN.top}" fill="transparent"/>`;
+  svg += `<rect id="elo-selection" x="0" y="${MARGIN.top}" width="0" height="${axisY - MARGIN.top}" fill="var(--accent)" fill-opacity="0.15" style="display:none" pointer-events="none"/>`;
+  svg += `<rect id="elo-hover-target" x="${MARGIN.left}" y="${MARGIN.top}" width="${CHART_W - MARGIN.left - MARGIN.right}" height="${axisY - MARGIN.top}" fill="transparent" style="cursor:crosshair"/>`;
   svg += '</svg>';
 
   const legend = selected.length > 1
     ? `<div class="elo-legend">${selected.map((code) => `<div class="item"><span class="key" style="background:${selectedColors[code]}"></span><span>${teamsMeta[code].name}</span></div>`).join('')}</div>`
     : '';
 
-  wrap.innerHTML = `${svg}${legend}<div class="elo-tooltip" id="elo-tooltip" style="display:none"></div>`;
+  const zoomHint = zoomDomain
+    ? `<p class="muted" id="zoom-hint">Zoomed to ${fmtTs(zoomDomain.start)} &ndash; ${fmtTs(zoomDomain.end)}. Click the chart to reset.</p>`
+    : `<p class="muted" id="zoom-hint">Drag across the chart to zoom in.</p>`;
 
-  wireChartHover(series, xScale, minTs, maxTs);
+  wrap.innerHTML = `${svg}${legend}${zoomHint}<div class="elo-tooltip" id="elo-tooltip" style="display:none"></div>`;
+
+  wireChartInteractions(series, minTs, maxTs);
 }
 
-function wireChartHover(series, xScale, minTs, maxTs) {
+function wireChartInteractions(series, minTs, maxTs) {
   const wrap = document.getElementById('chart-wrap');
   const svgEl = wrap.querySelector('svg');
   const hoverTarget = document.getElementById('elo-hover-target');
   const crosshair = document.getElementById('elo-crosshair');
   const tooltip = document.getElementById('elo-tooltip');
+  const selectionRect = document.getElementById('elo-selection');
+  const plotLeft = MARGIN.left;
+  const plotRight = CHART_W - MARGIN.right;
+  const CLICK_THRESHOLD_PX = 6;
+  const MIN_ZOOM_SPAN_MS = 14 * 24 * 60 * 60 * 1000; // 14 days
 
   function nearestPointAtOrBefore(points, ts) {
     let lo = 0, hi = points.length - 1, ans = null;
@@ -334,18 +374,23 @@ function wireChartHover(series, xScale, minTs, maxTs) {
     return ans || points[0];
   }
 
-  hoverTarget.addEventListener('mousemove', (e) => {
-    const rect = svgEl.getBoundingClientRect();
+  function svgXFromEvent(e, rect) {
     const px = e.clientX - rect.left;
-    const frac = px / rect.width;
-    const svgX = frac * CHART_W;
-    const ts = minTs + ((svgX - MARGIN.left) / (CHART_W - MARGIN.left - MARGIN.right)) * (maxTs - minTs);
+    const frac = Math.min(1, Math.max(0, px / rect.width));
+    return frac * CHART_W;
+  }
 
+  function tsFromSvgX(svgX) {
+    return minTs + ((svgX - plotLeft) / (plotRight - plotLeft)) * (maxTs - minTs);
+  }
+
+  function showTooltipAt(svgX, e, rect) {
+    const ts = tsFromSvgX(svgX);
     crosshair.style.display = '';
     crosshair.setAttribute('x1', svgX.toFixed(1));
     crosshair.setAttribute('x2', svgX.toFixed(1));
 
-    const rows = series.map((s) => {
+    const rows = series.filter((s) => s.points.length > 0).map((s) => {
       const p = nearestPointAtOrBefore(s.points, ts);
       return { code: s.code, color: selectedColors[s.code], date: p.date, elo: p.elo };
     });
@@ -354,15 +399,73 @@ function wireChartHover(series, xScale, minTs, maxTs) {
     tooltip.innerHTML = `<div class="date">${dateLabel}</div>` + rows.map((r) => `
       <div class="row"><span class="key" style="background:${r.color}"></span><span class="val">${r.elo.toFixed(1)}</span><span class="name">${teamsMeta[r.code].name}</span></div>
     `).join('');
-    const py = e.clientY - rect.top;
     tooltip.style.display = '';
-    tooltip.style.left = `${(px / rect.width) * 100}%`;
-    tooltip.style.top = `${py}px`;
+    tooltip.style.left = `${(svgX / CHART_W) * 100}%`;
+    tooltip.style.top = `${e.clientY - rect.top}px`;
+  }
+
+  function hideTooltip() {
+    crosshair.style.display = 'none';
+    tooltip.style.display = 'none';
+  }
+
+  let isDragging = false;
+  let dragStartSvgX = null;
+
+  function onWindowMouseMove(e) {
+    const rect = svgEl.getBoundingClientRect();
+    const svgX = svgXFromEvent(e, rect);
+    const x0 = Math.min(dragStartSvgX, svgX);
+    const x1 = Math.max(dragStartSvgX, svgX);
+    selectionRect.style.display = '';
+    selectionRect.setAttribute('x', x0.toFixed(1));
+    selectionRect.setAttribute('width', Math.max(0, x1 - x0).toFixed(1));
+  }
+
+  function onWindowMouseUp(e) {
+    isDragging = false;
+    window.removeEventListener('mousemove', onWindowMouseMove);
+    window.removeEventListener('mouseup', onWindowMouseUp);
+    selectionRect.style.display = 'none';
+
+    const rect = svgEl.getBoundingClientRect();
+    const svgX = svgXFromEvent(e, rect);
+    const dragScreenPx = Math.abs(svgX - dragStartSvgX) * (rect.width / CHART_W);
+
+    if (dragScreenPx < CLICK_THRESHOLD_PX) {
+      if (zoomDomain) { zoomDomain = null; renderChart(); }
+      return;
+    }
+
+    const tsA = tsFromSvgX(dragStartSvgX);
+    const tsB = tsFromSvgX(svgX);
+    const start = Math.min(tsA, tsB);
+    const end = Math.max(tsA, tsB);
+    if (end - start < MIN_ZOOM_SPAN_MS) return;
+
+    zoomDomain = { start, end };
+    renderChart();
+  }
+
+  hoverTarget.addEventListener('mousemove', (e) => {
+    if (isDragging) return;
+    const rect = svgEl.getBoundingClientRect();
+    showTooltipAt(svgXFromEvent(e, rect), e, rect);
   });
 
   hoverTarget.addEventListener('mouseleave', () => {
-    crosshair.style.display = 'none';
-    tooltip.style.display = 'none';
+    if (!isDragging) hideTooltip();
+  });
+
+  hoverTarget.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+    const rect = svgEl.getBoundingClientRect();
+    dragStartSvgX = svgXFromEvent(e, rect);
+    isDragging = true;
+    hideTooltip();
+    window.addEventListener('mousemove', onWindowMouseMove);
+    window.addEventListener('mouseup', onWindowMouseUp);
+    e.preventDefault();
   });
 }
 
