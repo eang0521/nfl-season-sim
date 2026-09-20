@@ -18,7 +18,7 @@ let teamsMeta = {}; // resolved: { code: { name, logo, active, color, secondaryC
 let ratings; // ratings.json contents
 let selected = [];
 let selectedColors = {}; // code -> resolved hex color for the current `selected` set
-let zoomDomain = null; // { start, end } (ms epoch) - null means "full history"
+let zoomDomain = null; // { start, end } (global week indices) - null means "full history"
 let leaderboardSort = { key: 'elo', dir: -1 };
 
 function resolveTeamsMeta(teams, eloTeamNames) {
@@ -240,23 +240,40 @@ function niceStep(range, targetTicks) {
 }
 
 // Returns the slice of a (chronologically sorted) points array visible in
-// [minTs, maxTs], including one point just before minTs (if any) so a
+// [minWeek, maxWeek], including one point just before minWeek (if any) so a
 // zoomed-in line enters the view at the correct value instead of
 // appearing to start wherever the first in-window game happens to be.
-function pointsForDomain(points, minTs, maxTs) {
+function pointsForDomain(points, minWeek, maxWeek) {
   let lo = 0, hi = points.length;
   while (lo < hi) {
     const mid = (lo + hi) >> 1;
-    if (new Date(points[mid].date).getTime() < minTs) lo = mid + 1; else hi = mid;
+    if (points[mid].week < minWeek) lo = mid + 1; else hi = mid;
   }
   const startIdx = Math.max(0, lo - 1);
   let endIdx = startIdx;
-  while (endIdx < points.length && new Date(points[endIdx].date).getTime() <= maxTs) endIdx++;
+  while (endIdx < points.length && points[endIdx].week <= maxWeek) endIdx++;
   return points.slice(startIdx, Math.max(endIdx, startIdx + 1));
 }
 
-function fmtTs(ts) {
-  return new Date(ts).toISOString().slice(0, 10);
+// Seasons laid back-to-back with no off-season gap: ratings.seasonStartOffset
+// maps each season to the global week index of its week 1.
+let cachedSeasonList = null;
+function seasonListSorted() {
+  if (!cachedSeasonList) {
+    cachedSeasonList = Object.keys(ratings.seasonStartOffset).map(Number).sort((a, b) => a - b);
+  }
+  return cachedSeasonList;
+}
+
+// Converts a global week index back to a human "SEASON Wk N" label.
+function seasonWeekLabel(globalWeek) {
+  const seasons = seasonListSorted();
+  let season = seasons[0];
+  for (const s of seasons) {
+    if (ratings.seasonStartOffset[s] <= globalWeek) season = s; else break;
+  }
+  const local = Math.round(globalWeek - ratings.seasonStartOffset[season]) + 1;
+  return `${season} Wk ${Math.max(1, local)}`;
 }
 
 function renderChart() {
@@ -268,17 +285,17 @@ function renderChart() {
 
   const fullSeries = selected.map((code) => ({ code, points: ratings.trajectories[code] }));
 
-  let minTs, maxTs;
+  let minWeek, maxWeek;
   if (zoomDomain) {
-    ({ start: minTs, end: maxTs } = zoomDomain);
+    ({ start: minWeek, end: maxWeek } = zoomDomain);
   } else {
-    const allDates = fullSeries.flatMap((s) => s.points.map((p) => p.date));
-    minTs = new Date(allDates.reduce((a, b) => (a < b ? a : b))).getTime();
-    maxTs = new Date(allDates.reduce((a, b) => (a > b ? a : b))).getTime();
+    const allWeeks = fullSeries.flatMap((s) => s.points.map((p) => p.week));
+    minWeek = Math.min(...allWeeks);
+    maxWeek = Math.max(...allWeeks);
   }
 
   // Points actually drawn, restricted to the current (possibly zoomed) window.
-  const series = fullSeries.map((s) => ({ code: s.code, points: pointsForDomain(s.points, minTs, maxTs) }));
+  const series = fullSeries.map((s) => ({ code: s.code, points: pointsForDomain(s.points, minWeek, maxWeek) }));
 
   const allElos = series.flatMap((s) => s.points.map((p) => p.elo));
   const minElo = Math.min(...allElos);
@@ -287,10 +304,7 @@ function renderChart() {
   const yMin = minElo - eloPad;
   const yMax = maxElo + eloPad;
 
-  const xScale = (date) => {
-    const t = new Date(date).getTime();
-    return MARGIN.left + ((t - minTs) / (maxTs - minTs || 1)) * (CHART_W - MARGIN.left - MARGIN.right);
-  };
+  const xScale = (week) => MARGIN.left + ((week - minWeek) / (maxWeek - minWeek || 1)) * (CHART_W - MARGIN.left - MARGIN.right);
   const yScale = (elo) => {
     const h = CHART_H - MARGIN.top - MARGIN.bottom;
     return MARGIN.top + h - ((elo - yMin) / (yMax - yMin || 1)) * h;
@@ -301,12 +315,13 @@ function renderChart() {
   const yTicks = [];
   for (let v = Math.ceil(yMin / yStep) * yStep; v <= yMax; v += yStep) yTicks.push(Math.round(v));
 
-  // X gridlines at nice year intervals.
-  const minYear = new Date(minTs).getFullYear();
-  const maxYear = new Date(maxTs).getFullYear();
-  const yearStep = Math.max(1, niceStep(maxYear - minYear, 8));
-  const xTicks = [];
-  for (let y = Math.ceil(minYear / yearStep) * yearStep; y <= maxYear; y += yearStep) xTicks.push(y);
+  // X gridlines: one per season (year) visible in the current window, thinned
+  // to roughly 8 labels. Seasons sit back-to-back (no off-season gap), so
+  // "week" already skips the dead time between seasons.
+  const seasons = seasonListSorted();
+  const visibleSeasons = seasons.filter((s) => ratings.seasonStartOffset[s] >= minWeek - 1 && ratings.seasonStartOffset[s] <= maxWeek);
+  const seasonStep = Math.max(1, Math.round(niceStep(visibleSeasons.length, 8)));
+  const xTicks = visibleSeasons.filter((_, i) => i % seasonStep === 0);
 
   let svg = `<svg viewBox="0 0 ${CHART_W} ${CHART_H}" role="img" aria-label="Elo rating history">`;
 
@@ -319,19 +334,19 @@ function renderChart() {
   // x axis labels
   const axisY = CHART_H - MARGIN.bottom;
   svg += `<line x1="${MARGIN.left}" y1="${axisY}" x2="${CHART_W - MARGIN.right}" y2="${axisY}" stroke="var(--chart-axis)" stroke-width="1"/>`;
-  for (const y of xTicks) {
-    const x = xScale(`${y}-07-01`);
-    svg += `<text x="${x}" y="${axisY + 18}" text-anchor="middle" font-size="11" fill="var(--text-dim)">${y}</text>`;
+  for (const season of xTicks) {
+    const x = xScale(ratings.seasonStartOffset[season]);
+    svg += `<text x="${x}" y="${axisY + 18}" text-anchor="middle" font-size="11" fill="var(--text-dim)">${season}</text>`;
   }
 
   // lines + end markers
   series.forEach((s) => {
     if (s.points.length === 0) return;
     const color = selectedColors[s.code];
-    const d = s.points.map((p, j) => `${j === 0 ? 'M' : 'L'} ${xScale(p.date).toFixed(1)} ${yScale(p.elo).toFixed(1)}`).join(' ');
+    const d = s.points.map((p, j) => `${j === 0 ? 'M' : 'L'} ${xScale(p.week).toFixed(1)} ${yScale(p.elo).toFixed(1)}`).join(' ');
     svg += `<path d="${d}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
     const last = s.points[s.points.length - 1];
-    svg += `<circle cx="${xScale(last.date).toFixed(1)}" cy="${yScale(last.elo).toFixed(1)}" r="4.5" fill="${color}" stroke="var(--panel)" stroke-width="2"/>`;
+    svg += `<circle cx="${xScale(last.week).toFixed(1)}" cy="${yScale(last.elo).toFixed(1)}" r="4.5" fill="${color}" stroke="var(--panel)" stroke-width="2"/>`;
   });
 
   svg += `<line id="elo-crosshair" x1="0" y1="${MARGIN.top}" x2="0" y2="${axisY}" stroke="var(--chart-axis)" stroke-width="1" style="display:none"/>`;
@@ -344,15 +359,15 @@ function renderChart() {
     : '';
 
   const zoomHint = zoomDomain
-    ? `<p class="muted" id="zoom-hint">Zoomed to ${fmtTs(zoomDomain.start)} &ndash; ${fmtTs(zoomDomain.end)}. Click the chart to reset.</p>`
+    ? `<p class="muted" id="zoom-hint">Zoomed to ${seasonWeekLabel(zoomDomain.start)} &ndash; ${seasonWeekLabel(zoomDomain.end)}. Click the chart to reset.</p>`
     : `<p class="muted" id="zoom-hint">Drag across the chart to zoom in.</p>`;
 
   wrap.innerHTML = `${svg}${legend}${zoomHint}<div class="elo-tooltip" id="elo-tooltip" style="display:none"></div>`;
 
-  wireChartInteractions(series, minTs, maxTs);
+  wireChartInteractions(series, minWeek, maxWeek);
 }
 
-function wireChartInteractions(series, minTs, maxTs) {
+function wireChartInteractions(series, minWeek, maxWeek) {
   const wrap = document.getElementById('chart-wrap');
   const svgEl = wrap.querySelector('svg');
   const hoverTarget = document.getElementById('elo-hover-target');
@@ -362,13 +377,13 @@ function wireChartInteractions(series, minTs, maxTs) {
   const plotLeft = MARGIN.left;
   const plotRight = CHART_W - MARGIN.right;
   const CLICK_THRESHOLD_PX = 6;
-  const MIN_ZOOM_SPAN_MS = 14 * 24 * 60 * 60 * 1000; // 14 days
+  const MIN_ZOOM_SPAN_WEEKS = 2;
 
-  function nearestPointAtOrBefore(points, ts) {
+  function nearestPointAtOrBefore(points, week) {
     let lo = 0, hi = points.length - 1, ans = null;
     while (lo <= hi) {
       const mid = (lo + hi) >> 1;
-      if (new Date(points[mid].date).getTime() <= ts) { ans = points[mid]; lo = mid + 1; }
+      if (points[mid].week <= week) { ans = points[mid]; lo = mid + 1; }
       else hi = mid - 1;
     }
     return ans || points[0];
@@ -380,23 +395,23 @@ function wireChartInteractions(series, minTs, maxTs) {
     return frac * CHART_W;
   }
 
-  function tsFromSvgX(svgX) {
-    return minTs + ((svgX - plotLeft) / (plotRight - plotLeft)) * (maxTs - minTs);
+  function weekFromSvgX(svgX) {
+    return minWeek + ((svgX - plotLeft) / (plotRight - plotLeft)) * (maxWeek - minWeek);
   }
 
   function showTooltipAt(svgX, e, rect) {
-    const ts = tsFromSvgX(svgX);
+    const week = weekFromSvgX(svgX);
     crosshair.style.display = '';
     crosshair.setAttribute('x1', svgX.toFixed(1));
     crosshair.setAttribute('x2', svgX.toFixed(1));
 
     const rows = series.filter((s) => s.points.length > 0).map((s) => {
-      const p = nearestPointAtOrBefore(s.points, ts);
-      return { code: s.code, color: selectedColors[s.code], date: p.date, elo: p.elo };
+      const p = nearestPointAtOrBefore(s.points, week);
+      return { code: s.code, color: selectedColors[s.code], season: p.season, weekInSeason: p.weekInSeason, elo: p.elo };
     });
-    const dateLabel = rows[0] ? rows[0].date : '';
+    const weekLabel = rows[0] ? `${rows[0].season} Wk ${rows[0].weekInSeason}` : '';
 
-    tooltip.innerHTML = `<div class="date">${dateLabel}</div>` + rows.map((r) => `
+    tooltip.innerHTML = `<div class="date">${weekLabel}</div>` + rows.map((r) => `
       <div class="row"><span class="key" style="background:${r.color}"></span><span class="val">${r.elo.toFixed(1)}</span><span class="name">${teamsMeta[r.code].name}</span></div>
     `).join('');
     tooltip.style.display = '';
@@ -437,11 +452,11 @@ function wireChartInteractions(series, minTs, maxTs) {
       return;
     }
 
-    const tsA = tsFromSvgX(dragStartSvgX);
-    const tsB = tsFromSvgX(svgX);
-    const start = Math.min(tsA, tsB);
-    const end = Math.max(tsA, tsB);
-    if (end - start < MIN_ZOOM_SPAN_MS) return;
+    const weekA = weekFromSvgX(dragStartSvgX);
+    const weekB = weekFromSvgX(svgX);
+    const start = Math.round(Math.min(weekA, weekB));
+    const end = Math.round(Math.max(weekA, weekB));
+    if (end - start < MIN_ZOOM_SPAN_WEEKS) return;
 
     zoomDomain = { start, end };
     renderChart();
