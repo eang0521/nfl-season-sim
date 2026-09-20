@@ -9,7 +9,7 @@ const BASE_COLUMNS = [
   { key: 'name', label: 'Team', width: 19 },
   { key: 'division', label: 'Division', width: 11 },
 ];
-const ELO_COLUMN = { key: 'elo', label: 'Elo' };
+const ELO_COLUMN = { key: 'elo', label: 'Elo', width: 5 };
 const REST_COLUMNS = [
   { key: 'record', label: 'Proj. Record' },
   { key: 'wonDivisionPct', label: 'Win Division', pct: true },
@@ -22,8 +22,8 @@ const REST_COLUMNS = [
 
 function columnsForSource(src) {
   const cols = src === 'ELO' ? [...BASE_COLUMNS, ELO_COLUMN, ...REST_COLUMNS] : [...BASE_COLUMNS, ...REST_COLUMNS];
-  const restCount = cols.length - BASE_COLUMNS.length;
-  const restWidth = (70 / restCount).toFixed(2);
+  const fixedWidth = cols.reduce((sum, c) => sum + (c.width ?? 0), 0);
+  const restWidth = ((100 - fixedWidth) / REST_COLUMNS.length).toFixed(2);
   return cols.map((c) => ({ ...c, width: c.width ?? Number(restWidth) }));
 }
 
@@ -71,7 +71,7 @@ function cellForColumn(abbrev, col) {
   const p = predictions.teams[abbrev];
   if (col.key === 'name') return `<td><div class="team-cell"><img src="${t.logo}" alt=""><span>${t.name}</span></div></td>`;
   if (col.key === 'division') return `<td>${divisionLabel(abbrev)}</td>`;
-  if (col.key === 'record') return `<td>${formatRecord(p)}</td>`;
+  if (col.key === 'record') return `<td class="leaderboard-cell">${formatRecord(p)}</td>`;
   if (col.key === 'elo') return `<td class="leaderboard-cell">${p.elo}</td>`;
   if (col.pct) return pctCell(p[col.key]);
   return '<td></td>';
