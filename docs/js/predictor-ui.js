@@ -32,11 +32,16 @@ let source = 'FPI';
 let currentTab = 'ALL';
 let sort = null; // { key, dir: 1 | -1 } - null means "grouped by division" (default view)
 
+const GAMES_PER_SEASON = 17;
+
+// Rounds to a whole win-loss record that always sums to a full season,
+// rather than rounding wins/losses/ties independently (which could land on
+// e.g. 12-5-0.1, or a W+L that doesn't add up to 17). Ties count as half a
+// win for rounding purposes, the standard convention.
 function formatRecord(p) {
-  const w = Math.round(p.projectedWins * 10) / 10;
-  const l = Math.round(p.projectedLosses * 10) / 10;
-  const t = Math.round(p.projectedTies * 10) / 10;
-  return t >= 0.1 ? `${w}-${l}-${t}` : `${w}-${l}`;
+  const w = Math.round(p.projectedWins + 0.5 * p.projectedTies);
+  const l = GAMES_PER_SEASON - w;
+  return `${w}-${l}`;
 }
 
 // Heat-map fill: white at 0% to dark blue at 100%, with text color flipped
