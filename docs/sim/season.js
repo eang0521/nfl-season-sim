@@ -5,14 +5,20 @@ import { simulateFullGame } from './engine.js';
 import { buildStandings } from './standings.js';
 import { simulatePlayoffs } from './playoffs.js';
 
+// (homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, neutral, allowTie) => {homeScore, awayScore}
+function defaultGameSim(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, neutral, allowTie) {
+  return simulateFullGame(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, { neutral, allowTie });
+}
+
 // schedule: { season, games: [{ id, week, seasonType, date, home, away, completed, homeScore, awayScore }] }
-// ratings: { [abbrev]: { off, def } }
-export function simulateSeason(schedule, ratings, scoreSampler, rng, teams) {
+// ratings: rating-system-specific shape consumed by gameSimFn (FPI: { [abbrev]: { off, def } }; Elo: { [abbrev]: number })
+// gameSimFn: optional pluggable game simulator (see docs/sim/playoffs.js); defaults to the FPI model.
+export function simulateSeason(schedule, ratings, scoreSampler, rng, teams, gameSimFn = defaultGameSim) {
   const games = schedule.games.map((g) => ({ ...g }));
 
   for (const g of games) {
     if (g.seasonType === 'REG' && !g.completed) {
-      const { homeScore, awayScore } = simulateFullGame(g.home, g.away, ratings, scoreSampler, rng, { allowTie: true });
+      const { homeScore, awayScore } = gameSimFn(g.home, g.away, ratings, scoreSampler, rng, false, true);
       g.homeScore = homeScore;
       g.awayScore = awayScore;
       g.completed = true;
@@ -21,7 +27,7 @@ export function simulateSeason(schedule, ratings, scoreSampler, rng, teams) {
   }
 
   const standings = buildStandings(games, teams);
-  const playoffs = simulatePlayoffs(standings, teams, ratings, scoreSampler, rng);
+  const playoffs = simulatePlayoffs(standings, teams, ratings, scoreSampler, rng, gameSimFn);
 
   return { games, standings, playoffs };
 }

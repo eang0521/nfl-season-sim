@@ -11,7 +11,8 @@
     "fetch:elo-games": "node scripts/fetch-elo-games.mjs",
     "fetch:all": "npm run fetch:fpi && npm run fetch:schedule && npm run fetch:score-dist && npm run fetch:elo-games",
     "predict": "node scripts/run-predictor.mjs",
+    "predict:elo": "node scripts/run-predictor-elo.mjs",
     "compute:elo": "node scripts/compute-elo.mjs",
-    "update": "npm run fetch:all && node scripts/maybe-run-predictor.mjs && npm run compute:elo"
+    "update": "npm run fetch:all && npm run compute:elo && node scripts/maybe-run-predictor.mjs"
   }
 }

@@ -5,7 +5,30 @@ initThemeToggle(document.getElementById('theme-toggle'));
 const DIVISIONS = ['East', 'North', 'South', 'West'];
 const CONFS_FOR_TAB = { ALL: ['AFC', 'NFC'], AFC: ['AFC'], NFC: ['NFC'] };
 
-let teams, predictions;
+const BASE_COLUMNS = [
+  { key: 'name', label: 'Team', width: 19 },
+  { key: 'division', label: 'Division', width: 11 },
+];
+const ELO_COLUMN = { key: 'elo', label: 'Elo' };
+const REST_COLUMNS = [
+  { key: 'record', label: 'Proj. Record' },
+  { key: 'wonDivisionPct', label: 'Win Division', pct: true },
+  { key: 'madePlayoffsPct', label: 'Make Playoffs', pct: true },
+  { key: 'madeDivisionalPct', label: 'Make Divisional Rd', pct: true },
+  { key: 'madeConfChampPct', label: 'Make Conf. Champ.', pct: true },
+  { key: 'madeSuperBowlPct', label: 'Make Super Bowl', pct: true },
+  { key: 'wonSuperBowlPct', label: 'Win Super Bowl', pct: true },
+];
+
+function columnsForSource(src) {
+  const cols = src === 'ELO' ? [...BASE_COLUMNS, ELO_COLUMN, ...REST_COLUMNS] : [...BASE_COLUMNS, ...REST_COLUMNS];
+  const restCount = cols.length - BASE_COLUMNS.length;
+  const restWidth = (70 / restCount).toFixed(2);
+  return cols.map((c) => ({ ...c, width: c.width ?? Number(restWidth) }));
+}
+
+let teams, predictionsFpi, predictionsElo, predictions;
+let source = 'FPI';
 let currentTab = 'ALL';
 let sort = null; // { key, dir: 1 | -1 } - null means "grouped by division" (default view)
 
@@ -38,20 +61,20 @@ function divisionLabel(abbrev) {
   return `${t.conf} ${t.div}`;
 }
 
-function teamRow(abbrev) {
+function cellForColumn(abbrev, col) {
   const t = teams[abbrev];
   const p = predictions.teams[abbrev];
-  return `<tr>
-    <td><div class="team-cell"><img src="${t.logo}" alt=""><span>${t.name}</span></div></td>
-    <td>${divisionLabel(abbrev)}</td>
-    <td>${formatRecord(p)}</td>
-    ${pctCell(p.wonDivisionPct)}
-    ${pctCell(p.madePlayoffsPct)}
-    ${pctCell(p.madeDivisionalPct)}
-    ${pctCell(p.madeConfChampPct)}
-    ${pctCell(p.madeSuperBowlPct)}
-    ${pctCell(p.wonSuperBowlPct)}
-  </tr>`;
+  if (col.key === 'name') return `<td><div class="team-cell"><img src="${t.logo}" alt=""><span>${t.name}</span></div></td>`;
+  if (col.key === 'division') return `<td>${divisionLabel(abbrev)}</td>`;
+  if (col.key === 'record') return `<td>${formatRecord(p)}</td>`;
+  if (col.key === 'elo') return `<td class="leaderboard-cell">${p.elo}</td>`;
+  if (col.pct) return pctCell(p[col.key]);
+  return '<td></td>';
+}
+
+function teamRow(abbrev) {
+  const cols = columnsForSource(source);
+  return `<tr>${cols.map((c) => cellForColumn(abbrev, c)).join('')}</tr>`;
 }
 
 function teamsForCurrentTab() {
@@ -67,7 +90,33 @@ function sortValue(abbrev, key) {
   return p[key];
 }
 
+function renderHeader() {
+  const headerRow = document.getElementById('odds-header');
+  const cols = columnsForSource(source);
+  headerRow.innerHTML = cols.map((c) => {
+    let label = c.label;
+    if (sort && sort.key === c.key) label += sort.dir === 1 ? ' ▲' : ' ▼';
+    const sortedClass = sort && sort.key === c.key ? ' sorted' : '';
+    return `<th data-key="${c.key}" style="width:${c.width}%; cursor:pointer" class="${sortedClass}">${label}</th>`;
+  }).join('');
+
+  headerRow.querySelectorAll('th').forEach((th) => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.key;
+      if (sort && sort.key === key) {
+        sort.dir *= -1;
+      } else {
+        // Percentages/records/elo default to descending (best first); name/division default ascending.
+        sort = { key, dir: key === 'name' || key === 'division' ? 1 : -1 };
+      }
+      render();
+    });
+  });
+}
+
 function render() {
+  renderHeader();
+
   const tbody = document.getElementById('odds-body');
   const list = teamsForCurrentTab();
 
@@ -96,27 +145,37 @@ function render() {
     });
     tbody.innerHTML = sorted.map(teamRow).join('');
   }
+}
 
-  document.querySelectorAll('#odds-header th').forEach((th) => {
-    th.classList.toggle('sorted', sort && th.dataset.key === sort.key);
-    th.textContent = th.textContent.replace(/ [▲▼]$/, '');
-    if (sort && th.dataset.key === sort.key) {
-      th.textContent += sort.dir === 1 ? ' ▲' : ' ▼';
-    }
-  });
+function updateMetaText() {
+  const meta = document.getElementById('meta-text');
+  const base = `Based on ${predictions.simCount.toLocaleString()} simulations after ${predictions.basedOnCompletedGames} completed games. ` +
+    `Last locked in ${new Date(predictions.updatedAt).toLocaleString()}.`;
+  meta.textContent = source === 'ELO' ? `${base} Uses all-time Elo ratings instead of ESPN FPI.` : base;
 }
 
 async function main() {
-  [teams, predictions] = await Promise.all([
+  [teams, predictionsFpi, predictionsElo] = await Promise.all([
     fetch('data/teams.json').then((r) => r.json()),
     fetch('data/predictions.json').then((r) => r.json()),
+    fetch('data/predictions-elo.json').then((r) => r.json()),
   ]);
 
-  document.getElementById('meta-text').innerHTML =
-    `Based on ${predictions.simCount.toLocaleString()} simulations after ${predictions.basedOnCompletedGames} completed games. ` +
-    `Last locked in ${new Date(predictions.updatedAt).toLocaleString()}.`;
-
+  predictions = predictionsFpi;
+  updateMetaText();
   render();
+
+  document.querySelectorAll('#source-tabs button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#source-tabs button').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      source = btn.dataset.source;
+      predictions = source === 'ELO' ? predictionsElo : predictionsFpi;
+      sort = null;
+      updateMetaText();
+      render();
+    });
+  });
 
   document.querySelectorAll('#conf-tabs button').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -124,20 +183,6 @@ async function main() {
       btn.classList.add('active');
       currentTab = btn.dataset.conf;
       sort = null;
-      render();
-    });
-  });
-
-  document.querySelectorAll('#odds-header th').forEach((th) => {
-    th.style.cursor = 'pointer';
-    th.addEventListener('click', () => {
-      const key = th.dataset.key;
-      if (sort && sort.key === key) {
-        sort.dir *= -1;
-      } else {
-        // Percentages/records default to descending (best first); name/division default ascending.
-        sort = { key, dir: key === 'name' || key === 'division' ? 1 : -1 };
-      }
       render();
     });
   });

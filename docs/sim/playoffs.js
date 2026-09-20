@@ -24,10 +24,16 @@ export function seedConference(conf, standings, teams, rng) {
   return [...seededWinners, ...seededWildcards]; // index 0 = #1 seed ... index 6 = #7 seed
 }
 
-function playGame(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, neutral = false) {
+// Default (FPI) game simulator, matching the pluggable gameSimFn signature:
+// (homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, neutral, allowTie) => {homeScore, awayScore}
+function defaultGameSim(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, neutral, allowTie) {
+  return simulateFullGame(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, { neutral, allowTie });
+}
+
+function playGame(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, neutral = false, gameSimFn = defaultGameSim) {
   // Playoff games can't end in a tie: allowTie=false keeps overtime going
   // (additional 2-possession sudden-death blocks) until someone wins.
-  const { homeScore, awayScore } = simulateFullGame(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, { neutral, allowTie: false });
+  const { homeScore, awayScore } = gameSimFn(homeAbbrev, awayAbbrev, ratings, scoreSampler, rng, neutral, false);
   return homeScore > awayScore
     ? { winner: homeAbbrev, loser: awayAbbrev, homeScore, awayScore }
     : { winner: awayAbbrev, loser: homeAbbrev, homeScore, awayScore };
@@ -45,7 +51,7 @@ function reseed(remainingSeeds) {
 
 // seeds: array of 7 abbrevs, index 0 = #1 seed ... index 6 = #7 seed.
 // Returns the full bracket result for one conference through the championship.
-export function simulateConferencePlayoffs(seeds, ratings, scoreSampler, rng) {
+export function simulateConferencePlayoffs(seeds, ratings, scoreSampler, rng, gameSimFn = defaultGameSim) {
   const withSeed = seeds.map((abbrev, i) => ({ abbrev, seed: i + 1 }));
   const results = { wildcard: [], divisional: [], championship: null };
 
@@ -53,7 +59,7 @@ export function simulateConferencePlayoffs(seeds, ratings, scoreSampler, rng) {
   const wcMatchups = [[withSeed[1], withSeed[6]], [withSeed[2], withSeed[5]], [withSeed[3], withSeed[4]]];
   const wcWinners = [withSeed[0]];
   for (const [home, away] of wcMatchups) {
-    const res = playGame(home.abbrev, away.abbrev, ratings, scoreSampler, rng);
+    const res = playGame(home.abbrev, away.abbrev, ratings, scoreSampler, rng, false, gameSimFn);
     results.wildcard.push({ homeSeed: home.seed, awaySeed: away.seed, ...res });
     wcWinners.push(withSeed.find((s) => s.abbrev === res.winner));
   }
@@ -62,32 +68,32 @@ export function simulateConferencePlayoffs(seeds, ratings, scoreSampler, rng) {
   const divMatchups = reseed(wcWinners);
   const divWinners = [];
   for (const [higher, lower] of divMatchups) {
-    const res = playGame(higher.abbrev, lower.abbrev, ratings, scoreSampler, rng);
+    const res = playGame(higher.abbrev, lower.abbrev, ratings, scoreSampler, rng, false, gameSimFn);
     results.divisional.push({ homeSeed: higher.seed, awaySeed: lower.seed, ...res });
     divWinners.push(withSeed.find((s) => s.abbrev === res.winner));
   }
 
   // Conference championship: higher remaining seed hosts.
   const [a, b] = divWinners.sort((x, y) => x.seed - y.seed);
-  const champRes = playGame(a.abbrev, b.abbrev, ratings, scoreSampler, rng);
+  const champRes = playGame(a.abbrev, b.abbrev, ratings, scoreSampler, rng, false, gameSimFn);
   results.championship = { homeSeed: a.seed, awaySeed: b.seed, ...champRes };
 
   return { ...results, champion: champRes.winner };
 }
 
-export function simulateSuperBowl(afcChampion, nfcChampion, ratings, scoreSampler, rng) {
-  const res = playGame(afcChampion, nfcChampion, ratings, scoreSampler, rng, true);
+export function simulateSuperBowl(afcChampion, nfcChampion, ratings, scoreSampler, rng, gameSimFn = defaultGameSim) {
+  const res = playGame(afcChampion, nfcChampion, ratings, scoreSampler, rng, true, gameSimFn);
   return res;
 }
 
-export function simulatePlayoffs(standings, teams, ratings, scoreSampler, rng) {
+export function simulatePlayoffs(standings, teams, ratings, scoreSampler, rng, gameSimFn = defaultGameSim) {
   const afcSeeds = seedConference('AFC', standings, teams, rng);
   const nfcSeeds = seedConference('NFC', standings, teams, rng);
 
-  const afc = simulateConferencePlayoffs(afcSeeds, ratings, scoreSampler, rng);
-  const nfc = simulateConferencePlayoffs(nfcSeeds, ratings, scoreSampler, rng);
+  const afc = simulateConferencePlayoffs(afcSeeds, ratings, scoreSampler, rng, gameSimFn);
+  const nfc = simulateConferencePlayoffs(nfcSeeds, ratings, scoreSampler, rng, gameSimFn);
 
-  const superBowl = simulateSuperBowl(afc.champion, nfc.champion, ratings, scoreSampler, rng);
+  const superBowl = simulateSuperBowl(afc.champion, nfc.champion, ratings, scoreSampler, rng, gameSimFn);
 
   return {
     afcSeeds, nfcSeeds, afc, nfc, superBowl,

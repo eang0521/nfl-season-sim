@@ -30,11 +30,11 @@ jobs:
       - name: Fetch FPI ratings, schedule, score distribution, and Elo games
         run: npm run fetch:all
 
-      - name: Re-run predictor if new games completed
-        run: node scripts/maybe-run-predictor.mjs
-
       - name: Recompute all-time Elo ratings
         run: npm run compute:elo
+
+      - name: Re-run FPI/Elo predictors if new games completed or ratings changed
+        run: node scripts/maybe-run-predictor.mjs
 
       - name: Commit updated data
         run: |

@@ -29,6 +29,10 @@
   <div class="card">
     <h2>Playoff Predictor</h2>
     <p class="muted" id="meta-text">Loading&hellip;</p>
+    <div class="tabs" id="source-tabs">
+      <button data-source="FPI" class="active">FPI Predictions</button>
+      <button data-source="ELO">Elo Predictions</button>
+    </div>
   </div>
   <div class="card">
     <div class="tabs" id="conf-tabs">
@@ -40,24 +44,14 @@
     <div class="table-scroll">
       <table class="odds-table">
         <thead>
-          <tr id="odds-header">
-            <th data-key="name">Team</th>
-            <th data-key="division">Division</th>
-            <th data-key="record">Proj. Record</th>
-            <th data-key="wonDivisionPct">Win Division</th>
-            <th data-key="madePlayoffsPct">Make Playoffs</th>
-            <th data-key="madeDivisionalPct">Make Divisional Rd</th>
-            <th data-key="madeConfChampPct">Make Conf. Champ.</th>
-            <th data-key="madeSuperBowlPct">Make Super Bowl</th>
-            <th data-key="wonSuperBowlPct">Win Super Bowl</th>
-          </tr>
+          <tr id="odds-header"></tr>
         </thead>
         <tbody id="odds-body"></tbody>
       </table>
     </div>
   </div>
 </main>
-<footer>10,000 simulations per lock-in &middot; Ratings from ESPN FPI &middot; Not affiliated with the NFL or ESPN</footer>
+<footer>10,000 simulations per lock-in &middot; Ratings from ESPN FPI or all-time Elo &middot; Not affiliated with the NFL or ESPN</footer>
 <script type="module" src="js/predictor-ui.js"></script>
 </body>
 </html>
