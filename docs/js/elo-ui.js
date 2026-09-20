@@ -46,6 +46,34 @@ function colorDistance(hexA, hexB) {
   return Math.sqrt((a.r - b.r) ** 2 + (a.g - b.g) ** 2 + (a.b - b.b) ** 2);
 }
 
+// Coarse hue-family buckets so e.g. the Chiefs' bright red (#E31837) and the
+// 49ers' dark red (#AA0000) count as "the same color" even though they're
+// numerically far apart in RGB (a plain Euclidean distance missed this -
+// two reds that are both unmistakably "red" to a person could still clear
+// a distance threshold). Achromatic colors (black/white/gray) have no hue
+// and aren't bucketed - two grays are told apart by lightness instead.
+const ACHROMATIC_SATURATION = 12; // below this, a color reads as black/white/gray rather than a real hue
+
+function colorFamily(hex) {
+  const { h, s, l } = hexToHsl(hex);
+  if (s < ACHROMATIC_SATURATION || l < 8 || l > 92) return null;
+  if (h < 15 || h >= 345) return 'red';
+  if (h < 35) return 'orange';
+  if (h < 70) return 'gold';
+  if (h < 170) return 'green';
+  if (h < 200) return 'teal';
+  if (h < 255) return 'blue';
+  if (h < 290) return 'purple';
+  return 'magenta';
+}
+
+function colorsCollide(hexA, hexB) {
+  const famA = colorFamily(hexA);
+  const famB = colorFamily(hexB);
+  if (famA && famA === famB) return true;
+  return colorDistance(hexA, hexB) < COLLISION_THRESHOLD;
+}
+
 function hexToHsl(hex) {
   const { r, g, b } = hexToRgb(hex);
   const rN = r / 255, gN = g / 255, bN = b / 255;
@@ -91,7 +119,10 @@ const MAX_LIGHTNESS_LIGHT = 62; // ceiling for a color's lightness on a light su
 // lightness. Achromatic colors (black/white/gray) stay achromatic.
 function ensureVisible(hex, theme) {
   const { h, s, l } = hexToHsl(hex);
-  const boostedS = s === 0 ? 0 : Math.max(s, 45);
+  // Don't force saturation onto a color colorFamily() treats as achromatic
+  // (e.g. the Buccaneers' near-black pewter secondary) - that would turn a
+  // gray into a spuriously colorful hue.
+  const boostedS = s < ACHROMATIC_SATURATION ? s : Math.max(s, 45);
   if (theme === 'dark' && l < MIN_LIGHTNESS_DARK) return hslToHex(h, boostedS, MIN_LIGHTNESS_DARK);
   if (theme === 'light' && l > MAX_LIGHTNESS_LIGHT) return hslToHex(h, boostedS, MAX_LIGHTNESS_LIGHT);
   return hex;
@@ -108,10 +139,10 @@ function assignSeriesColors(codes, theme) {
   for (const code of codes) {
     const m = teamsMeta[code];
     const candidates = [m.color, m.secondaryColor].filter(Boolean).map((c) => ensureVisible(c, theme));
-    let chosen = candidates.find((c) => !used.some((u) => colorDistance(u, c) < COLLISION_THRESHOLD));
+    let chosen = candidates.find((c) => !used.some((u) => colorsCollide(u, c)));
     while (!chosen && fallbackIdx < FALLBACK_PALETTE.length) {
       const candidate = ensureVisible(FALLBACK_PALETTE[fallbackIdx++], theme);
-      if (!used.some((u) => colorDistance(u, candidate) < COLLISION_THRESHOLD)) chosen = candidate;
+      if (!used.some((u) => colorsCollide(u, candidate))) chosen = candidate;
     }
     if (!chosen) chosen = candidates[candidates.length - 1] || ensureVisible(FALLBACK_PALETTE[codes.indexOf(code) % FALLBACK_PALETTE.length], theme);
     used.push(chosen);
@@ -350,6 +381,14 @@ function renderChart() {
   });
 
   svg += `<line id="elo-crosshair" x1="0" y1="${MARGIN.top}" x2="0" y2="${axisY}" stroke="var(--chart-axis)" stroke-width="1" style="display:none"/>`;
+
+  // Hover dots: one per series, hidden until the pointer is over the chart,
+  // then snapped to that series' exact point at the hovered week. Drawn
+  // after the crosshair so they sit on top of it.
+  series.forEach((s, i) => {
+    if (s.points.length === 0) return;
+    svg += `<circle id="elo-hoverdot-${i}" r="5" fill="${selectedColors[s.code]}" stroke="var(--panel)" stroke-width="2" style="display:none" pointer-events="none"/>`;
+  });
   svg += `<rect id="elo-selection" x="0" y="${MARGIN.top}" width="0" height="${axisY - MARGIN.top}" fill="var(--accent)" fill-opacity="0.15" style="display:none" pointer-events="none"/>`;
   svg += `<rect id="elo-hover-target" x="${MARGIN.left}" y="${MARGIN.top}" width="${CHART_W - MARGIN.left - MARGIN.right}" height="${axisY - MARGIN.top}" fill="transparent" style="cursor:crosshair"/>`;
   svg += '</svg>';
@@ -364,10 +403,10 @@ function renderChart() {
 
   wrap.innerHTML = `${svg}${legend}${zoomHint}<div class="elo-tooltip" id="elo-tooltip" style="display:none"></div>`;
 
-  wireChartInteractions(series, minWeek, maxWeek);
+  wireChartInteractions(series, minWeek, maxWeek, xScale, yScale);
 }
 
-function wireChartInteractions(series, minWeek, maxWeek) {
+function wireChartInteractions(series, minWeek, maxWeek, xScale, yScale) {
   const wrap = document.getElementById('chart-wrap');
   const svgEl = wrap.querySelector('svg');
   const hoverTarget = document.getElementById('elo-hover-target');
@@ -405,9 +444,20 @@ function wireChartInteractions(series, minWeek, maxWeek) {
     crosshair.setAttribute('x1', svgX.toFixed(1));
     crosshair.setAttribute('x2', svgX.toFixed(1));
 
-    const rows = series.filter((s) => s.points.length > 0).map((s) => {
+    const rows = [];
+    series.forEach((s, i) => {
+      const dot = document.getElementById(`elo-hoverdot-${i}`);
+      if (s.points.length === 0) { if (dot) dot.style.display = 'none'; return; }
       const p = nearestPointAtOrBefore(s.points, week);
-      return { code: s.code, color: selectedColors[s.code], season: p.season, weekInSeason: p.weekInSeason, elo: p.elo };
+      rows.push({ code: s.code, color: selectedColors[s.code], season: p.season, weekInSeason: p.weekInSeason, elo: p.elo });
+      // Snap the dot to that series' exact point for the hovered week, not
+      // the raw cursor position - the line only actually has a value at
+      // its own game weeks.
+      if (dot) {
+        dot.setAttribute('cx', xScale(p.week).toFixed(1));
+        dot.setAttribute('cy', yScale(p.elo).toFixed(1));
+        dot.style.display = '';
+      }
     });
     const weekLabel = rows[0] ? `${rows[0].season} Wk ${rows[0].weekInSeason}` : '';
 
@@ -422,6 +472,10 @@ function wireChartInteractions(series, minWeek, maxWeek) {
   function hideTooltip() {
     crosshair.style.display = 'none';
     tooltip.style.display = 'none';
+    series.forEach((s, i) => {
+      const dot = document.getElementById(`elo-hoverdot-${i}`);
+      if (dot) dot.style.display = 'none';
+    });
   }
 
   let isDragging = false;
