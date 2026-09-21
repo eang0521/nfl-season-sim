@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-09-20T23:05:06.651Z",
+  "updatedAt": "2026-09-21T02:54:22.591Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -179,56 +179,12 @@
       "awayScore": 10
     },
     {
-      "id": "2026_02_JAX_DEN",
+      "id": "2026_02_IND_KC",
       "week": 2,
       "seasonType": "REG",
-      "date": "2026-09-20T20:05Z",
-      "home": "DEN",
-      "away": "JAX",
-      "completed": true,
-      "homeScore": 20,
-      "awayScore": 13
-    },
-    {
-      "id": "2026_02_LV_LAC",
-      "week": 2,
-      "seasonType": "REG",
-      "date": "2026-09-20T20:05Z",
-      "home": "LAC",
-      "away": "LV",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_02_WSH_DAL",
-      "week": 2,
-      "seasonType": "REG",
-      "date": "2026-09-20T20:25Z",
-      "home": "DAL",
-      "away": "WSH",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_02_SEA_ARI",
-      "week": 2,
-      "seasonType": "REG",
-      "date": "2026-09-20T20:25Z",
-      "home": "ARI",
-      "away": "SEA",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_02_MIA_SF",
-      "week": 2,
-      "seasonType": "REG",
-      "date": "2026-09-20T20:25Z",
-      "home": "SF",
-      "away": "MIA",
+      "date": "2026-09-21T00:20Z",
+      "home": "KC",
+      "away": "IND",
       "completed": false,
       "homeScore": null,
       "awayScore": null
@@ -322,15 +278,59 @@
       "awayScore": 20
     },
     {
-      "id": "2026_02_IND_KC",
+      "id": "2026_02_JAX_DEN",
       "week": 2,
       "seasonType": "REG",
-      "date": "2026-09-21T00:20Z",
-      "home": "KC",
-      "away": "IND",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "date": "2026-09-20T20:05Z",
+      "home": "DEN",
+      "away": "JAX",
+      "completed": true,
+      "homeScore": 20,
+      "awayScore": 13
+    },
+    {
+      "id": "2026_02_LV_LAC",
+      "week": 2,
+      "seasonType": "REG",
+      "date": "2026-09-20T20:05Z",
+      "home": "LAC",
+      "away": "LV",
+      "completed": true,
+      "homeScore": 14,
+      "awayScore": 26
+    },
+    {
+      "id": "2026_02_WSH_DAL",
+      "week": 2,
+      "seasonType": "REG",
+      "date": "2026-09-20T20:25Z",
+      "home": "DAL",
+      "away": "WSH",
+      "completed": true,
+      "homeScore": 37,
+      "awayScore": 20
+    },
+    {
+      "id": "2026_02_SEA_ARI",
+      "week": 2,
+      "seasonType": "REG",
+      "date": "2026-09-20T20:25Z",
+      "home": "ARI",
+      "away": "SEA",
+      "completed": true,
+      "homeScore": 7,
+      "awayScore": 31
+    },
+    {
+      "id": "2026_02_MIA_SF",
+      "week": 2,
+      "seasonType": "REG",
+      "date": "2026-09-20T20:25Z",
+      "home": "SF",
+      "away": "MIA",
+      "completed": true,
+      "homeScore": 35,
+      "awayScore": 13
     },
     {
       "id": "2026_02_DET_BUF",
