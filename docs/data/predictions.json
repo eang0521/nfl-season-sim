@@ -1,553 +1,553 @@
 {
-  "updatedAt": "2026-09-21T09:31:08.890Z",
+  "updatedAt": "2026-09-22T08:57:59.851Z",
   "simCount": 10000,
-  "basedOnCompletedGames": 31,
+  "basedOnCompletedGames": 32,
   "fpiRatings": {
     "SF": {
-      "fpi": 7.146,
-      "off": 5.921,
-      "def": 0.735
+      "fpi": 7.357,
+      "off": 6.092,
+      "def": 0.772
     },
     "BUF": {
-      "fpi": 5.643,
-      "off": 6.318,
-      "def": -0.752
-    },
-    "KC": {
-      "fpi": 4.473,
-      "off": 2.958,
-      "def": 1.64
-    },
-    "BAL": {
-      "fpi": 4.109,
-      "off": 3.406,
-      "def": 0.834
-    },
-    "DAL": {
-      "fpi": 3.27,
-      "off": 4.187,
-      "def": -1.185
-    },
-    "SEA": {
-      "fpi": 2.87,
-      "off": -0.375,
-      "def": 2.99
+      "fpi": 5.655,
+      "off": 6.335,
+      "def": -0.782
     },
     "LAR": {
-      "fpi": 2.838,
-      "off": 1.77,
-      "def": 1.175
+      "fpi": 4.691,
+      "off": 2.789,
+      "def": 2.222
+    },
+    "KC": {
+      "fpi": 4.489,
+      "off": 2.997,
+      "def": 1.641
+    },
+    "BAL": {
+      "fpi": 4.154,
+      "off": 3.412,
+      "def": 0.861
+    },
+    "DAL": {
+      "fpi": 3.089,
+      "off": 4.025,
+      "def": -1.212
+    },
+    "SEA": {
+      "fpi": 3.053,
+      "off": -0.243,
+      "def": 3.024
     },
     "JAX": {
-      "fpi": 2.564,
-      "off": 1.502,
-      "def": 0.902
+      "fpi": 2.676,
+      "off": 1.583,
+      "def": 0.896
     },
     "DET": {
-      "fpi": 2.224,
-      "off": 3.388,
-      "def": -1.176
+      "fpi": 2.227,
+      "off": 3.4,
+      "def": -1.21
     },
     "NE": {
-      "fpi": 2.046,
-      "off": 0.449,
-      "def": 1.584
+      "fpi": 1.821,
+      "off": 0.366,
+      "def": 1.46
     },
     "CIN": {
-      "fpi": 1.612,
-      "off": 1.702,
-      "def": -0.145
-    },
-    "PHI": {
-      "fpi": 1.383,
-      "off": 0.496,
-      "def": 0.921
-    },
-    "HOU": {
-      "fpi": 0.967,
-      "off": -0.98,
-      "def": 1.915
-    },
-    "GB": {
-      "fpi": 0.59,
-      "off": 0.943,
-      "def": -0.513
+      "fpi": 1.584,
+      "off": 1.68,
+      "def": -0.116
     },
     "MIN": {
-      "fpi": 0.498,
-      "off": -2.284,
-      "def": 2.481
+      "fpi": 1.513,
+      "off": -1.257,
+      "def": 2.48
+    },
+    "PHI": {
+      "fpi": 1.482,
+      "off": 0.66,
+      "def": 0.856
+    },
+    "HOU": {
+      "fpi": 0.971,
+      "off": -0.929,
+      "def": 1.873
+    },
+    "GB": {
+      "fpi": 0.575,
+      "off": 0.916,
+      "def": -0.505
     },
     "DEN": {
-      "fpi": -0.196,
-      "off": -1.65,
-      "def": 1.465
-    },
-    "NYG": {
-      "fpi": -0.252,
-      "off": 1.149,
-      "def": -1.298
+      "fpi": -0.338,
+      "off": -1.716,
+      "def": 1.381
     },
     "NO": {
-      "fpi": -0.59,
-      "off": -0.467,
-      "def": -0.138
+      "fpi": -0.621,
+      "off": -0.486,
+      "def": -0.205
     },
     "IND": {
-      "fpi": -1.118,
-      "off": 0.271,
-      "def": -1.507
-    },
-    "TB": {
-      "fpi": -1.179,
-      "off": -0.813,
-      "def": -0.767
+      "fpi": -1.028,
+      "off": 0.392,
+      "def": -1.529
     },
     "LAC": {
-      "fpi": -1.201,
-      "off": -2.126,
-      "def": 0.764
+      "fpi": -1.196,
+      "off": -2.096,
+      "def": 0.73
+    },
+    "TB": {
+      "fpi": -1.197,
+      "off": -0.757,
+      "def": -0.822
     },
     "CAR": {
-      "fpi": -1.257,
-      "off": -0.763,
-      "def": -0.483
+      "fpi": -1.346,
+      "off": -0.753,
+      "def": -0.552
     },
     "CHI": {
-      "fpi": -1.873,
-      "off": -2.365,
-      "def": 0.214
+      "fpi": -1.934,
+      "off": -2.468,
+      "def": 0.262
     },
     "PIT": {
-      "fpi": -2.741,
-      "off": -3.724,
-      "def": 0.824
+      "fpi": -2.816,
+      "off": -3.655,
+      "def": 0.687
     },
     "LV": {
-      "fpi": -3.026,
-      "off": -3.317,
-      "def": 0.22
+      "fpi": -3.057,
+      "off": -3.256,
+      "def": 0.195
     },
     "NYJ": {
-      "fpi": -3.191,
-      "off": -2.718,
-      "def": -0.7
+      "fpi": -3.189,
+      "off": -2.698,
+      "def": -0.711
     },
     "WSH": {
-      "fpi": -3.43,
-      "off": -1.662,
-      "def": -1.636
+      "fpi": -3.632,
+      "off": -1.832,
+      "def": -1.685
     },
     "TEN": {
-      "fpi": -4.825,
-      "off": -3.214,
-      "def": -1.026
+      "fpi": -4.744,
+      "off": -3.171,
+      "def": -0.997
     },
     "ATL": {
-      "fpi": -5.226,
-      "off": -4.529,
-      "def": -0.777
+      "fpi": -5.125,
+      "off": -4.516,
+      "def": -0.687
     },
     "ARI": {
-      "fpi": -5.265,
-      "off": -2.554,
-      "def": -2.51
+      "fpi": -5.14,
+      "off": -2.387,
+      "def": -2.522
     },
     "CLE": {
-      "fpi": -6.321,
-      "off": -5.844,
-      "def": -0.627
+      "fpi": -6.318,
+      "off": -5.821,
+      "def": -0.645
+    },
+    "NYG": {
+      "fpi": -6.809,
+      "off": -5.281,
+      "def": -1.779
     },
     "MIA": {
-      "fpi": -8.056,
-      "off": -4.248,
-      "def": -3.423
+      "fpi": -7.895,
+      "off": -4.157,
+      "def": -3.381
     }
   },
   "teams": {
     "BUF": {
-      "madePlayoffsPct": 0.9748,
-      "wonDivisionPct": 0.8208,
-      "madeDivisionalPct": 0.8001,
-      "madeConfChampPct": 0.516,
-      "madeSuperBowlPct": 0.3195,
-      "wonSuperBowlPct": 0.1753,
-      "avgSeedIfMadePlayoffs": 2.408904390644235,
-      "projectedWins": 12.3712,
-      "projectedLosses": 4.5412,
-      "projectedTies": 0.0876
+      "madePlayoffsPct": 0.9716,
+      "wonDivisionPct": 0.8204,
+      "madeDivisionalPct": 0.7831,
+      "madeConfChampPct": 0.501,
+      "madeSuperBowlPct": 0.3067,
+      "wonSuperBowlPct": 0.1714,
+      "avgSeedIfMadePlayoffs": 2.4553314121037464,
+      "projectedWins": 12.2442,
+      "projectedLosses": 4.6768,
+      "projectedTies": 0.079
     },
     "MIA": {
-      "madePlayoffsPct": 0.0031,
+      "madePlayoffsPct": 0.0029,
       "wonDivisionPct": 0.0003,
-      "madeDivisionalPct": 0.0006,
-      "madeConfChampPct": 0.0001,
+      "madeDivisionalPct": 0.0004,
+      "madeConfChampPct": 0,
       "madeSuperBowlPct": 0,
       "wonSuperBowlPct": 0,
-      "avgSeedIfMadePlayoffs": 6.290322580645161,
-      "projectedWins": 3.5986,
-      "projectedLosses": 13.3034,
-      "projectedTies": 0.098
+      "avgSeedIfMadePlayoffs": 6.206896551724138,
+      "projectedWins": 3.6831,
+      "projectedLosses": 13.2227,
+      "projectedTies": 0.0942
     },
     "NE": {
-      "madePlayoffsPct": 0.7004,
-      "wonDivisionPct": 0.1633,
-      "madeDivisionalPct": 0.3286,
-      "madeConfChampPct": 0.1392,
-      "madeSuperBowlPct": 0.0575,
-      "wonSuperBowlPct": 0.0257,
-      "avgSeedIfMadePlayoffs": 5.0248429468874924,
-      "projectedWins": 9.5803,
-      "projectedLosses": 7.3089,
-      "projectedTies": 0.1108
+      "madePlayoffsPct": 0.6695,
+      "wonDivisionPct": 0.1597,
+      "madeDivisionalPct": 0.3121,
+      "madeConfChampPct": 0.1315,
+      "madeSuperBowlPct": 0.0578,
+      "wonSuperBowlPct": 0.0238,
+      "avgSeedIfMadePlayoffs": 5.043913368185213,
+      "projectedWins": 9.4435,
+      "projectedLosses": 7.4364,
+      "projectedTies": 0.1201
     },
     "NYJ": {
-      "madePlayoffsPct": 0.186,
-      "wonDivisionPct": 0.0156,
-      "madeDivisionalPct": 0.0497,
-      "madeConfChampPct": 0.011,
+      "madePlayoffsPct": 0.1858,
+      "wonDivisionPct": 0.0196,
+      "madeDivisionalPct": 0.0462,
+      "madeConfChampPct": 0.0108,
       "madeSuperBowlPct": 0.0022,
-      "wonSuperBowlPct": 0.0009,
-      "avgSeedIfMadePlayoffs": 5.998924731182796,
-      "projectedWins": 7.1128,
-      "projectedLosses": 9.7541,
-      "projectedTies": 0.1331
+      "wonSuperBowlPct": 0.0007,
+      "avgSeedIfMadePlayoffs": 5.933799784714747,
+      "projectedWins": 7.1,
+      "projectedLosses": 9.7753,
+      "projectedTies": 0.1247
     },
     "BAL": {
-      "madePlayoffsPct": 0.8839,
-      "wonDivisionPct": 0.4977,
-      "madeDivisionalPct": 0.572,
-      "madeConfChampPct": 0.3137,
-      "madeSuperBowlPct": 0.1649,
-      "wonSuperBowlPct": 0.0872,
-      "avgSeedIfMadePlayoffs": 3.7723724403213033,
-      "projectedWins": 10.9087,
-      "projectedLosses": 5.9913,
-      "projectedTies": 0.1
+      "madePlayoffsPct": 0.8888,
+      "wonDivisionPct": 0.4935,
+      "madeDivisionalPct": 0.5861,
+      "madeConfChampPct": 0.3209,
+      "madeSuperBowlPct": 0.168,
+      "wonSuperBowlPct": 0.0895,
+      "avgSeedIfMadePlayoffs": 3.7581008100810083,
+      "projectedWins": 10.9426,
+      "projectedLosses": 5.9619,
+      "projectedTies": 0.0955
     },
     "CIN": {
-      "madePlayoffsPct": 0.8774,
-      "wonDivisionPct": 0.4658,
-      "madeDivisionalPct": 0.4889,
-      "madeConfChampPct": 0.2201,
-      "madeSuperBowlPct": 0.0878,
-      "wonSuperBowlPct": 0.0384,
-      "avgSeedIfMadePlayoffs": 3.859471164805106,
-      "projectedWins": 11.011,
-      "projectedLosses": 5.877,
-      "projectedTies": 0.112
+      "madePlayoffsPct": 0.8767,
+      "wonDivisionPct": 0.4738,
+      "madeDivisionalPct": 0.4951,
+      "madeConfChampPct": 0.2197,
+      "madeSuperBowlPct": 0.0905,
+      "wonSuperBowlPct": 0.0377,
+      "avgSeedIfMadePlayoffs": 3.80232690772214,
+      "projectedWins": 11.0325,
+      "projectedLosses": 5.8576,
+      "projectedTies": 0.1099
     },
     "CLE": {
-      "madePlayoffsPct": 0.0513,
-      "wonDivisionPct": 0.0057,
-      "madeDivisionalPct": 0.009,
-      "madeConfChampPct": 0.0017,
-      "madeSuperBowlPct": 0.0004,
+      "madePlayoffsPct": 0.0621,
+      "wonDivisionPct": 0.0072,
+      "madeDivisionalPct": 0.0103,
+      "madeConfChampPct": 0.0022,
+      "madeSuperBowlPct": 0.0003,
       "wonSuperBowlPct": 0,
-      "avgSeedIfMadePlayoffs": 6.144249512670565,
-      "projectedWins": 5.814,
-      "projectedLosses": 11.0452,
-      "projectedTies": 0.1408
+      "avgSeedIfMadePlayoffs": 6.078904991948471,
+      "projectedWins": 6.0392,
+      "projectedLosses": 10.8166,
+      "projectedTies": 0.1442
     },
     "PIT": {
-      "madePlayoffsPct": 0.1877,
-      "wonDivisionPct": 0.0308,
-      "madeDivisionalPct": 0.0534,
-      "madeConfChampPct": 0.0128,
-      "madeSuperBowlPct": 0.0031,
-      "wonSuperBowlPct": 0.0008,
-      "avgSeedIfMadePlayoffs": 5.7618540223761325,
-      "projectedWins": 7.1612,
-      "projectedLosses": 9.6937,
-      "projectedTies": 0.1451
+      "madePlayoffsPct": 0.1714,
+      "wonDivisionPct": 0.0255,
+      "madeDivisionalPct": 0.0478,
+      "madeConfChampPct": 0.0123,
+      "madeSuperBowlPct": 0.0023,
+      "wonSuperBowlPct": 0.0006,
+      "avgSeedIfMadePlayoffs": 5.807467911318553,
+      "projectedWins": 7.0796,
+      "projectedLosses": 9.7762,
+      "projectedTies": 0.1442
     },
     "HOU": {
-      "madePlayoffsPct": 0.382,
-      "wonDivisionPct": 0.2379,
-      "madeDivisionalPct": 0.1797,
-      "madeConfChampPct": 0.0651,
-      "madeSuperBowlPct": 0.0243,
-      "wonSuperBowlPct": 0.0091,
-      "avgSeedIfMadePlayoffs": 4.684816753926701,
-      "projectedWins": 8.059,
-      "projectedLosses": 8.8075,
-      "projectedTies": 0.1335
+      "madePlayoffsPct": 0.4016,
+      "wonDivisionPct": 0.2264,
+      "madeDivisionalPct": 0.1816,
+      "madeConfChampPct": 0.0684,
+      "madeSuperBowlPct": 0.0257,
+      "wonSuperBowlPct": 0.0099,
+      "avgSeedIfMadePlayoffs": 4.784362549800797,
+      "projectedWins": 8.2571,
+      "projectedLosses": 8.608,
+      "projectedTies": 0.1349
     },
     "IND": {
-      "madePlayoffsPct": 0.2181,
-      "wonDivisionPct": 0.1221,
-      "madeDivisionalPct": 0.0871,
-      "madeConfChampPct": 0.0256,
-      "madeSuperBowlPct": 0.0081,
-      "wonSuperBowlPct": 0.0032,
-      "avgSeedIfMadePlayoffs": 4.916552040348464,
-      "projectedWins": 7.2371,
-      "projectedLosses": 9.6432,
-      "projectedTies": 0.1197
+      "madePlayoffsPct": 0.2574,
+      "wonDivisionPct": 0.1236,
+      "madeDivisionalPct": 0.0968,
+      "madeConfChampPct": 0.0298,
+      "madeSuperBowlPct": 0.0098,
+      "wonSuperBowlPct": 0.0044,
+      "avgSeedIfMadePlayoffs": 5.114996114996115,
+      "projectedWins": 7.5079,
+      "projectedLosses": 9.3807,
+      "projectedTies": 0.1114
     },
     "JAX": {
-      "madePlayoffsPct": 0.7428,
-      "wonDivisionPct": 0.6222,
-      "madeDivisionalPct": 0.4357,
-      "madeConfChampPct": 0.1894,
-      "madeSuperBowlPct": 0.0786,
-      "wonSuperBowlPct": 0.0357,
-      "avgSeedIfMadePlayoffs": 3.805735056542811,
-      "projectedWins": 9.7452,
-      "projectedLosses": 7.1462,
-      "projectedTies": 0.1086
+      "madePlayoffsPct": 0.7653,
+      "wonDivisionPct": 0.6276,
+      "madeDivisionalPct": 0.4613,
+      "madeConfChampPct": 0.2004,
+      "madeSuperBowlPct": 0.087,
+      "wonSuperBowlPct": 0.0397,
+      "avgSeedIfMadePlayoffs": 3.7466353064157847,
+      "projectedWins": 10.012,
+      "projectedLosses": 6.8788,
+      "projectedTies": 0.1092
     },
     "TEN": {
-      "madePlayoffsPct": 0.0364,
-      "wonDivisionPct": 0.0178,
-      "madeDivisionalPct": 0.0098,
-      "madeConfChampPct": 0.002,
-      "madeSuperBowlPct": 0.0006,
-      "wonSuperBowlPct": 0,
-      "avgSeedIfMadePlayoffs": 5.263736263736264,
-      "projectedWins": 5.2574,
-      "projectedLosses": 11.6211,
-      "projectedTies": 0.1215
+      "madePlayoffsPct": 0.0479,
+      "wonDivisionPct": 0.0224,
+      "madeDivisionalPct": 0.0133,
+      "madeConfChampPct": 0.0031,
+      "madeSuperBowlPct": 0.0004,
+      "wonSuperBowlPct": 0.0001,
+      "avgSeedIfMadePlayoffs": 5.250521920668058,
+      "projectedWins": 5.5245,
+      "projectedLosses": 11.3441,
+      "projectedTies": 0.1314
     },
     "DEN": {
-      "madePlayoffsPct": 0.4431,
-      "wonDivisionPct": 0.0866,
-      "madeDivisionalPct": 0.1648,
-      "madeConfChampPct": 0.0567,
-      "madeSuperBowlPct": 0.0177,
-      "wonSuperBowlPct": 0.0045,
-      "avgSeedIfMadePlayoffs": 5.444369216881065,
-      "projectedWins": 8.4158,
-      "projectedLosses": 8.4443,
-      "projectedTies": 0.1399
+      "madePlayoffsPct": 0.4062,
+      "wonDivisionPct": 0.0791,
+      "madeDivisionalPct": 0.1483,
+      "madeConfChampPct": 0.0514,
+      "madeSuperBowlPct": 0.0155,
+      "wonSuperBowlPct": 0.006,
+      "avgSeedIfMadePlayoffs": 5.489414081733137,
+      "projectedWins": 8.2618,
+      "projectedLosses": 8.6009,
+      "projectedTies": 0.1373
     },
     "KC": {
-      "madePlayoffsPct": 0.9509,
-      "wonDivisionPct": 0.8446,
-      "madeDivisionalPct": 0.7156,
-      "madeConfChampPct": 0.4177,
-      "madeSuperBowlPct": 0.227,
-      "wonSuperBowlPct": 0.1151,
-      "avgSeedIfMadePlayoffs": 2.666736775686192,
-      "projectedWins": 11.7217,
-      "projectedLosses": 5.1714,
-      "projectedTies": 0.1069
+      "madePlayoffsPct": 0.9465,
+      "wonDivisionPct": 0.8488,
+      "madeDivisionalPct": 0.7154,
+      "madeConfChampPct": 0.4222,
+      "madeSuperBowlPct": 0.2266,
+      "wonSuperBowlPct": 0.1173,
+      "avgSeedIfMadePlayoffs": 2.6791336502905443,
+      "projectedWins": 11.6214,
+      "projectedLosses": 5.2727,
+      "projectedTies": 0.1059
     },
     "LV": {
-      "madePlayoffsPct": 0.2764,
-      "wonDivisionPct": 0.0562,
-      "madeDivisionalPct": 0.0769,
-      "madeConfChampPct": 0.0197,
-      "madeSuperBowlPct": 0.0055,
-      "wonSuperBowlPct": 0.002,
-      "avgSeedIfMadePlayoffs": 5.583212735166425,
-      "projectedWins": 7.6383,
-      "projectedLosses": 9.2258,
-      "projectedTies": 0.1359
+      "madePlayoffsPct": 0.2674,
+      "wonDivisionPct": 0.0591,
+      "madeDivisionalPct": 0.077,
+      "madeConfChampPct": 0.019,
+      "madeSuperBowlPct": 0.0048,
+      "wonSuperBowlPct": 0.0012,
+      "avgSeedIfMadePlayoffs": 5.543006731488407,
+      "projectedWins": 7.6082,
+      "projectedLosses": 9.258,
+      "projectedTies": 0.1338
     },
     "LAC": {
-      "madePlayoffsPct": 0.0857,
-      "wonDivisionPct": 0.0126,
-      "madeDivisionalPct": 0.0281,
-      "madeConfChampPct": 0.0092,
-      "madeSuperBowlPct": 0.0028,
-      "wonSuperBowlPct": 0.0005,
-      "avgSeedIfMadePlayoffs": 5.926487747957993,
-      "projectedWins": 6.0105,
-      "projectedLosses": 10.8614,
-      "projectedTies": 0.1281
+      "madePlayoffsPct": 0.0789,
+      "wonDivisionPct": 0.013,
+      "madeDivisionalPct": 0.0252,
+      "madeConfChampPct": 0.0073,
+      "madeSuperBowlPct": 0.0024,
+      "wonSuperBowlPct": 0.0008,
+      "avgSeedIfMadePlayoffs": 5.903675538656527,
+      "projectedWins": 5.9309,
+      "projectedLosses": 10.9444,
+      "projectedTies": 0.1247
     },
     "DAL": {
-      "madePlayoffsPct": 0.5992,
-      "wonDivisionPct": 0.3537,
-      "madeDivisionalPct": 0.362,
-      "madeConfChampPct": 0.1933,
-      "madeSuperBowlPct": 0.089,
-      "wonSuperBowlPct": 0.0438,
-      "avgSeedIfMadePlayoffs": 4.077102803738318,
-      "projectedWins": 9.7323,
-      "projectedLosses": 7.1683,
-      "projectedTies": 0.0994
+      "madePlayoffsPct": 0.6043,
+      "wonDivisionPct": 0.3875,
+      "madeDivisionalPct": 0.3448,
+      "madeConfChampPct": 0.1708,
+      "madeSuperBowlPct": 0.0726,
+      "wonSuperBowlPct": 0.0329,
+      "avgSeedIfMadePlayoffs": 4.053946715207679,
+      "projectedWins": 9.7111,
+      "projectedLosses": 7.1956,
+      "projectedTies": 0.0933
     },
     "NYG": {
-      "madePlayoffsPct": 0.4128,
-      "wonDivisionPct": 0.2038,
-      "madeDivisionalPct": 0.1914,
-      "madeConfChampPct": 0.0739,
-      "madeSuperBowlPct": 0.0258,
-      "wonSuperBowlPct": 0.0094,
-      "avgSeedIfMadePlayoffs": 4.518168604651163,
-      "projectedWins": 8.8699,
-      "projectedLosses": 8.0203,
-      "projectedTies": 0.1098
-    },
-    "PHI": {
-      "madePlayoffsPct": 0.6531,
-      "wonDivisionPct": 0.4324,
-      "madeDivisionalPct": 0.3679,
-      "madeConfChampPct": 0.1739,
-      "madeSuperBowlPct": 0.0761,
-      "wonSuperBowlPct": 0.033,
-      "avgSeedIfMadePlayoffs": 3.7890062777522586,
-      "projectedWins": 10.0535,
-      "projectedLosses": 6.8315,
-      "projectedTies": 0.115
-    },
-    "WSH": {
-      "madePlayoffsPct": 0.0393,
-      "wonDivisionPct": 0.0101,
-      "madeDivisionalPct": 0.0111,
-      "madeConfChampPct": 0.0026,
-      "madeSuperBowlPct": 0.0007,
-      "wonSuperBowlPct": 0.0001,
-      "avgSeedIfMadePlayoffs": 5.6183206106870225,
-      "projectedWins": 5.8531,
-      "projectedLosses": 11.035,
-      "projectedTies": 0.1119
-    },
-    "CHI": {
-      "madePlayoffsPct": 0.1572,
-      "wonDivisionPct": 0.0426,
-      "madeDivisionalPct": 0.0565,
-      "madeConfChampPct": 0.018,
-      "madeSuperBowlPct": 0.0058,
-      "wonSuperBowlPct": 0.0018,
-      "avgSeedIfMadePlayoffs": 5.380407124681934,
-      "projectedWins": 7.4232,
-      "projectedLosses": 9.442,
-      "projectedTies": 0.1348
-    },
-    "DET": {
-      "madePlayoffsPct": 0.7443,
-      "wonDivisionPct": 0.4819,
-      "madeDivisionalPct": 0.4503,
-      "madeConfChampPct": 0.2304,
-      "madeSuperBowlPct": 0.0977,
-      "wonSuperBowlPct": 0.0448,
-      "avgSeedIfMadePlayoffs": 3.648528819024587,
-      "projectedWins": 10.5589,
-      "projectedLosses": 6.3383,
-      "projectedTies": 0.1028
-    },
-    "GB": {
-      "madePlayoffsPct": 0.394,
-      "wonDivisionPct": 0.1501,
-      "madeDivisionalPct": 0.1869,
-      "madeConfChampPct": 0.0739,
-      "madeSuperBowlPct": 0.0272,
-      "wonSuperBowlPct": 0.0098,
-      "avgSeedIfMadePlayoffs": 4.828934010152285,
-      "projectedWins": 8.8762,
-      "projectedLosses": 8.0113,
-      "projectedTies": 0.1125
-    },
-    "MIN": {
-      "madePlayoffsPct": 0.6213,
-      "wonDivisionPct": 0.3254,
-      "madeDivisionalPct": 0.3165,
-      "madeConfChampPct": 0.1299,
-      "madeSuperBowlPct": 0.0475,
-      "wonSuperBowlPct": 0.0183,
-      "avgSeedIfMadePlayoffs": 4.189763399323998,
-      "projectedWins": 9.8567,
-      "projectedLosses": 7.0085,
-      "projectedTies": 0.1348
-    },
-    "ATL": {
-      "madePlayoffsPct": 0.0198,
-      "wonDivisionPct": 0.0145,
-      "madeDivisionalPct": 0.0053,
-      "madeConfChampPct": 0.0011,
-      "madeSuperBowlPct": 0.0002,
-      "wonSuperBowlPct": 0,
-      "avgSeedIfMadePlayoffs": 4.525252525252525,
-      "projectedWins": 4.8479,
-      "projectedLosses": 12.0268,
-      "projectedTies": 0.1253
-    },
-    "CAR": {
-      "madePlayoffsPct": 0.3545,
-      "wonDivisionPct": 0.2815,
-      "madeDivisionalPct": 0.1554,
-      "madeConfChampPct": 0.0514,
-      "madeSuperBowlPct": 0.0169,
-      "wonSuperBowlPct": 0.0063,
-      "avgSeedIfMadePlayoffs": 4.075317348377997,
-      "projectedWins": 8.0744,
-      "projectedLosses": 8.7976,
-      "projectedTies": 0.128
-    },
-    "NO": {
-      "madePlayoffsPct": 0.6377,
-      "wonDivisionPct": 0.5735,
-      "madeDivisionalPct": 0.3085,
-      "madeConfChampPct": 0.1182,
-      "madeSuperBowlPct": 0.038,
-      "wonSuperBowlPct": 0.0152,
-      "avgSeedIfMadePlayoffs": 3.621765720558256,
-      "projectedWins": 9.444,
-      "projectedLosses": 7.4349,
-      "projectedTies": 0.1211
-    },
-    "TB": {
-      "madePlayoffsPct": 0.1822,
-      "wonDivisionPct": 0.1305,
-      "madeDivisionalPct": 0.0782,
-      "madeConfChampPct": 0.0251,
-      "madeSuperBowlPct": 0.0066,
-      "wonSuperBowlPct": 0.0027,
-      "avgSeedIfMadePlayoffs": 4.440175631174533,
-      "projectedWins": 7.0038,
-      "projectedLosses": 9.8788,
-      "projectedTies": 0.1174
-    },
-    "ARI": {
-      "madePlayoffsPct": 0.0167,
-      "wonDivisionPct": 0.0012,
-      "madeDivisionalPct": 0.0031,
-      "madeConfChampPct": 0.0004,
+      "madePlayoffsPct": 0.0168,
+      "wonDivisionPct": 0.0085,
+      "madeDivisionalPct": 0.0033,
+      "madeConfChampPct": 0.0006,
       "madeSuperBowlPct": 0,
       "wonSuperBowlPct": 0,
-      "avgSeedIfMadePlayoffs": 6.233532934131737,
-      "projectedWins": 5.4611,
-      "projectedLosses": 11.4417,
-      "projectedTies": 0.0972
+      "avgSeedIfMadePlayoffs": 5.023809523809524,
+      "projectedWins": 5.363,
+      "projectedLosses": 11.5293,
+      "projectedTies": 0.1077
+    },
+    "PHI": {
+      "madePlayoffsPct": 0.7494,
+      "wonDivisionPct": 0.588,
+      "madeDivisionalPct": 0.4277,
+      "madeConfChampPct": 0.2004,
+      "madeSuperBowlPct": 0.0761,
+      "wonSuperBowlPct": 0.0311,
+      "avgSeedIfMadePlayoffs": 3.447157726180945,
+      "projectedWins": 10.4705,
+      "projectedLosses": 6.4114,
+      "projectedTies": 0.1181
+    },
+    "WSH": {
+      "madePlayoffsPct": 0.0456,
+      "wonDivisionPct": 0.016,
+      "madeDivisionalPct": 0.0117,
+      "madeConfChampPct": 0.0026,
+      "madeSuperBowlPct": 0.0006,
+      "wonSuperBowlPct": 0,
+      "avgSeedIfMadePlayoffs": 5.364035087719298,
+      "projectedWins": 6.0984,
+      "projectedLosses": 10.7801,
+      "projectedTies": 0.1215
+    },
+    "CHI": {
+      "madePlayoffsPct": 0.1375,
+      "wonDivisionPct": 0.0325,
+      "madeDivisionalPct": 0.0463,
+      "madeConfChampPct": 0.0102,
+      "madeSuperBowlPct": 0.0026,
+      "wonSuperBowlPct": 0.0007,
+      "avgSeedIfMadePlayoffs": 5.556363636363637,
+      "projectedWins": 7.3453,
+      "projectedLosses": 9.5238,
+      "projectedTies": 0.1309
+    },
+    "DET": {
+      "madePlayoffsPct": 0.761,
+      "wonDivisionPct": 0.4653,
+      "madeDivisionalPct": 0.4374,
+      "madeConfChampPct": 0.2116,
+      "madeSuperBowlPct": 0.086,
+      "wonSuperBowlPct": 0.0373,
+      "avgSeedIfMadePlayoffs": 3.8252299605781865,
+      "projectedWins": 10.7064,
+      "projectedLosses": 6.1932,
+      "projectedTies": 0.1004
+    },
+    "GB": {
+      "madePlayoffsPct": 0.3576,
+      "wonDivisionPct": 0.1157,
+      "madeDivisionalPct": 0.1576,
+      "madeConfChampPct": 0.0549,
+      "madeSuperBowlPct": 0.0202,
+      "wonSuperBowlPct": 0.0083,
+      "avgSeedIfMadePlayoffs": 5.108780760626399,
+      "projectedWins": 8.7875,
+      "projectedLosses": 8.1015,
+      "projectedTies": 0.111
+    },
+    "MIN": {
+      "madePlayoffsPct": 0.6966,
+      "wonDivisionPct": 0.3865,
+      "madeDivisionalPct": 0.3645,
+      "madeConfChampPct": 0.162,
+      "madeSuperBowlPct": 0.0641,
+      "wonSuperBowlPct": 0.0248,
+      "avgSeedIfMadePlayoffs": 4.071633649153029,
+      "projectedWins": 10.3026,
+      "projectedLosses": 6.5758,
+      "projectedTies": 0.1216
+    },
+    "ATL": {
+      "madePlayoffsPct": 0.0213,
+      "wonDivisionPct": 0.0162,
+      "madeDivisionalPct": 0.0061,
+      "madeConfChampPct": 0.0006,
+      "madeSuperBowlPct": 0.0002,
+      "wonSuperBowlPct": 0,
+      "avgSeedIfMadePlayoffs": 4.530516431924883,
+      "projectedWins": 4.8655,
+      "projectedLosses": 12.002,
+      "projectedTies": 0.1325
+    },
+    "CAR": {
+      "madePlayoffsPct": 0.3295,
+      "wonDivisionPct": 0.2618,
+      "madeDivisionalPct": 0.1379,
+      "madeConfChampPct": 0.0483,
+      "madeSuperBowlPct": 0.0153,
+      "wonSuperBowlPct": 0.0029,
+      "avgSeedIfMadePlayoffs": 4.100758725341427,
+      "projectedWins": 8.0149,
+      "projectedLosses": 8.8454,
+      "projectedTies": 0.1397
+    },
+    "NO": {
+      "madePlayoffsPct": 0.6609,
+      "wonDivisionPct": 0.6029,
+      "madeDivisionalPct": 0.3015,
+      "madeConfChampPct": 0.1096,
+      "madeSuperBowlPct": 0.0345,
+      "wonSuperBowlPct": 0.0111,
+      "avgSeedIfMadePlayoffs": 3.5910122560145257,
+      "projectedWins": 9.6048,
+      "projectedLosses": 7.2674,
+      "projectedTies": 0.1278
+    },
+    "TB": {
+      "madePlayoffsPct": 0.1617,
+      "wonDivisionPct": 0.1191,
+      "madeDivisionalPct": 0.0653,
+      "madeConfChampPct": 0.0212,
+      "madeSuperBowlPct": 0.0069,
+      "wonSuperBowlPct": 0.0015,
+      "avgSeedIfMadePlayoffs": 4.396413110698825,
+      "projectedWins": 6.901,
+      "projectedLosses": 9.9732,
+      "projectedTies": 0.1258
+    },
+    "ARI": {
+      "madePlayoffsPct": 0.018,
+      "wonDivisionPct": 0.0005,
+      "madeDivisionalPct": 0.0051,
+      "madeConfChampPct": 0.0012,
+      "madeSuperBowlPct": 0,
+      "wonSuperBowlPct": 0,
+      "avgSeedIfMadePlayoffs": 6.333333333333333,
+      "projectedWins": 5.6875,
+      "projectedLosses": 11.2178,
+      "projectedTies": 0.0947
     },
     "LAR": {
-      "madePlayoffsPct": 0.4892,
-      "wonDivisionPct": 0.065,
-      "madeDivisionalPct": 0.2646,
-      "madeConfChampPct": 0.1209,
-      "madeSuperBowlPct": 0.0575,
-      "wonSuperBowlPct": 0.0271,
-      "avgSeedIfMadePlayoffs": 5.341578086672118,
-      "projectedWins": 9.2583,
-      "projectedLosses": 7.6203,
-      "projectedTies": 0.1214
+      "madePlayoffsPct": 0.7395,
+      "wonDivisionPct": 0.1241,
+      "madeDivisionalPct": 0.4584,
+      "madeConfChampPct": 0.2433,
+      "madeSuperBowlPct": 0.1325,
+      "wonSuperBowlPct": 0.0704,
+      "avgSeedIfMadePlayoffs": 5.041379310344827,
+      "projectedWins": 10.5225,
+      "projectedLosses": 6.3679,
+      "projectedTies": 0.1096
     },
     "SF": {
-      "madePlayoffsPct": 0.9669,
-      "wonDivisionPct": 0.758,
-      "madeDivisionalPct": 0.8285,
-      "madeConfChampPct": 0.5936,
-      "madeSuperBowlPct": 0.4177,
-      "wonSuperBowlPct": 0.2455,
-      "avgSeedIfMadePlayoffs": 2.2991002171889545,
-      "projectedWins": 12.7476,
-      "projectedLosses": 4.1664,
-      "projectedTies": 0.086
+      "madePlayoffsPct": 0.9784,
+      "wonDivisionPct": 0.7259,
+      "madeDivisionalPct": 0.8309,
+      "madeConfChampPct": 0.5807,
+      "madeSuperBowlPct": 0.4035,
+      "wonSuperBowlPct": 0.2371,
+      "avgSeedIfMadePlayoffs": 2.4214022894521667,
+      "projectedWins": 12.9509,
+      "projectedLosses": 3.9692,
+      "projectedTies": 0.0799
     },
     "SEA": {
-      "madePlayoffsPct": 0.7118,
-      "wonDivisionPct": 0.1758,
-      "madeDivisionalPct": 0.4138,
-      "madeConfChampPct": 0.1934,
-      "madeSuperBowlPct": 0.0933,
-      "wonSuperBowlPct": 0.0438,
-      "avgSeedIfMadePlayoffs": 4.687131216633886,
-      "projectedWins": 10.4106,
-      "projectedLosses": 6.4569,
-      "projectedTies": 0.1325
+      "madePlayoffsPct": 0.7219,
+      "wonDivisionPct": 0.1495,
+      "madeDivisionalPct": 0.4015,
+      "madeConfChampPct": 0.182,
+      "madeSuperBowlPct": 0.0849,
+      "wonSuperBowlPct": 0.0388,
+      "avgSeedIfMadePlayoffs": 4.926721152514198,
+      "projectedWins": 10.5048,
+      "projectedLosses": 6.3605,
+      "projectedTies": 0.1347
     }
   }
 }
