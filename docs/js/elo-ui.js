@@ -445,6 +445,8 @@ function wireChartInteractions(series, minWeek, maxWeek, xScale, yScale) {
   const CLICK_THRESHOLD_PX = 6;
   const MIN_ZOOM_SPAN_WEEKS = 2;
 
+  // Returns the last known point at or before `week`, or null if the team
+  // didn't exist yet at that point (no games at or before `week`).
   function nearestPointAtOrBefore(points, week) {
     let lo = 0, hi = points.length - 1, ans = null;
     while (lo <= hi) {
@@ -452,7 +454,7 @@ function wireChartInteractions(series, minWeek, maxWeek, xScale, yScale) {
       if (points[mid].week <= week) { ans = points[mid]; lo = mid + 1; }
       else hi = mid - 1;
     }
-    return ans || points[0];
+    return ans;
   }
 
   function svgXFromEvent(e, rect) {
@@ -467,15 +469,18 @@ function wireChartInteractions(series, minWeek, maxWeek, xScale, yScale) {
 
   function showTooltipAt(svgX, e, rect) {
     const week = weekFromSvgX(svgX);
-    crosshair.style.display = '';
-    crosshair.setAttribute('x1', svgX.toFixed(1));
-    crosshair.setAttribute('x2', svgX.toFixed(1));
 
     const rows = [];
     series.forEach((s, i) => {
       const dot = document.getElementById(`elo-hoverdot-${i}`);
-      if (s.points.length === 0) { if (dot) dot.style.display = 'none'; return; }
-      const p = nearestPointAtOrBefore(s.points, week);
+      const p = s.points.length ? nearestPointAtOrBefore(s.points, week) : null;
+      // Hide teams that didn't exist yet (no game at or before this week) or,
+      // for historical/inactive teams, that no longer existed by this week
+      // (their last game already happened - e.g. before folding or
+      // relocating under a new identity).
+      const lastPoint = s.points[s.points.length - 1];
+      const stillExisted = p && (teamsMeta[s.code].active || p !== lastPoint || week <= lastPoint.week);
+      if (!stillExisted) { if (dot) dot.style.display = 'none'; return; }
       rows.push({ code: s.code, color: selectedColors[s.code], season: p.season, weekInSeason: p.weekInSeason, elo: p.elo });
       // Snap the dot to that series' exact point for the hovered week, not
       // the raw cursor position - the line only actually has a value at
@@ -486,9 +491,16 @@ function wireChartInteractions(series, minWeek, maxWeek, xScale, yScale) {
         dot.style.display = '';
       }
     });
-    const weekLabel = rows[0] ? `${rows[0].season} Wk ${rows[0].weekInSeason}` : '';
 
-    tooltip.innerHTML = `<div class="date">${weekLabel}</div>` + rows.map((r) => `
+    // No selected team existed at this point in time (e.g. hovering before
+    // any of them were founded) - nothing useful to show.
+    if (rows.length === 0) { hideTooltip(); return; }
+
+    crosshair.style.display = '';
+    crosshair.setAttribute('x1', svgX.toFixed(1));
+    crosshair.setAttribute('x2', svgX.toFixed(1));
+
+    tooltip.innerHTML = `<div class="date">${seasonWeekLabel(week)}</div>` + rows.map((r) => `
       <div class="row"><span class="key" style="background:${r.color}"></span><span class="val">${r.elo.toFixed(1)}</span><span class="name">${teamsMeta[r.code].name}</span></div>
     `).join('');
     tooltip.style.display = '';
