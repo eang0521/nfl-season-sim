@@ -157,6 +157,12 @@ function activeCodesSortedByElo() {
     .sort((a, b) => ratings.current[b].elo - ratings.current[a].elo);
 }
 
+function activeCodesSortedByName() {
+  return Object.keys(teamsMeta)
+    .filter((c) => teamsMeta[c].active)
+    .sort((a, b) => teamsMeta[a].name.localeCompare(teamsMeta[b].name));
+}
+
 // ---------- Leaderboard ----------
 
 function renderLeaderboard() {
@@ -205,7 +211,7 @@ function wireLeaderboardSort() {
 
 function renderTeamPicker() {
   const picker = document.getElementById('team-picker');
-  const activeCodes = activeCodesSortedByElo();
+  const activeCodes = activeCodesSortedByName();
 
   const chipsHtml = activeCodes.map((code) => chipHtml(code)).join('');
 
