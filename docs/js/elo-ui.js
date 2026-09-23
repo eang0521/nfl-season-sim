@@ -212,8 +212,15 @@ function wireLeaderboardSort() {
 function renderTeamPicker() {
   const picker = document.getElementById('team-picker');
   const activeCodes = activeCodesSortedByName();
+  // Historical (inactive) teams have no permanent chip - they're only
+  // addable via the search box below - so any currently-selected historical
+  // team needs its own chip here, or there'd be no way to click it off again.
+  const historicalSelected = selected
+    .filter((c) => !teamsMeta[c].active)
+    .sort((a, b) => teamsMeta[a].name.localeCompare(teamsMeta[b].name));
 
-  const chipsHtml = activeCodes.map((code) => chipHtml(code)).join('');
+  const chipsHtml = activeCodes.map((code) => chipHtml(code)).join('')
+    + historicalSelected.map((code) => chipHtml(code, true)).join('');
 
   picker.innerHTML = `
     ${chipsHtml}
@@ -238,14 +245,18 @@ function renderTeamPicker() {
   });
 }
 
-function chipHtml(code) {
+function chipHtml(code, historical = false) {
   const m = teamsMeta[code];
   const isSelected = selected.includes(code);
   const color = selectedColors[code] || null;
-  return `<div class="team-chip ${isSelected ? 'selected' : ''}" data-code="${code}" style="${color ? `--series-color:${color}` : ''}">
+  const r = ratings.current[code];
+  const years = historical && r && r.firstSeason ? ` <span class="muted-inline">(${r.firstSeason}&ndash;${r.lastSeason})</span>` : '';
+  const title = historical ? ' title="Click to remove"' : '';
+  return `<div class="team-chip ${isSelected ? 'selected' : ''}" data-code="${code}"${title} style="${color ? `--series-color:${color}` : ''}">
     <span class="swatch"></span>
     ${m.logo ? `<img src="${m.logo}" alt="">` : ''}
-    <span>${m.name}</span>
+    <span>${m.name}</span>${years}
+    ${historical ? '<span class="chip-remove">&times;</span>' : ''}
   </div>`;
 }
 

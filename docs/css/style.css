@@ -197,6 +197,9 @@ footer a { color: var(--text-dim); }
 .team-chip.selected { border-color: var(--series-color, var(--accent)); color: var(--text); background: color-mix(in srgb, var(--series-color, var(--accent)) 12%, transparent); }
 .team-chip .swatch { width: 10px; height: 10px; border-radius: 50%; background: var(--series-color, transparent); visibility: hidden; }
 .team-chip.selected .swatch { visibility: visible; }
+.team-chip .muted-inline { color: var(--text-dim); font-size: 12px; }
+.team-chip .chip-remove { color: var(--text-dim); font-weight: 700; margin-left: 2px; }
+.team-chip:hover .chip-remove { color: var(--bad); }
 
 .elo-chart-wrap { position: relative; }
 .elo-chart-wrap svg { width: 100%; height: auto; display: block; overflow: visible; }
