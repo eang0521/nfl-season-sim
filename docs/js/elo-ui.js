@@ -376,12 +376,22 @@ function renderChart() {
     svg += `<text x="${x}" y="${axisY + 18}" text-anchor="middle" font-size="11" fill="var(--text-dim)">${season}</text>`;
   }
 
-  // lines + end markers
+  // lines + end markers. Weeks are packed with no x-axis gap between seasons,
+  // but the line itself is drawn one season at a time so it doesn't visually
+  // bridge the off-season - a team's last week-20 game and next year's
+  // week-1 game shouldn't look like consecutive games.
   series.forEach((s) => {
     if (s.points.length === 0) return;
     const color = selectedColors[s.code];
-    const d = s.points.map((p, j) => `${j === 0 ? 'M' : 'L'} ${xScale(p.week).toFixed(1)} ${yScale(p.elo).toFixed(1)}`).join(' ');
-    svg += `<path d="${d}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+    let segStart = 0;
+    for (let j = 1; j <= s.points.length; j++) {
+      if (j === s.points.length || s.points[j].season !== s.points[segStart].season) {
+        const seg = s.points.slice(segStart, j);
+        const d = seg.map((p, k) => `${k === 0 ? 'M' : 'L'} ${xScale(p.week).toFixed(1)} ${yScale(p.elo).toFixed(1)}`).join(' ');
+        svg += `<path d="${d}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+        segStart = j;
+      }
+    }
     const last = s.points[s.points.length - 1];
     svg += `<circle cx="${xScale(last.week).toFixed(1)}" cy="${yScale(last.elo).toFixed(1)}" r="4.5" fill="${color}" stroke="var(--panel)" stroke-width="2"/>`;
   });
