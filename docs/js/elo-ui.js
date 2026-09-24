@@ -21,6 +21,12 @@ let selectedColors = {}; // code -> resolved hex color for the current `selected
 let zoomDomain = null; // { start, end } (global week indices) - null means "full history"
 let leaderboardSort = { key: 'elo', dir: -1 };
 
+let teamsCurrent = {}; // raw teams.json (keyed by current abbrev, e.g. "LV") - for schedule lookups
+let schedule = null; // schedule.json contents
+let eloRatingsCurrent = {}; // current-abbrev -> current Elo, for the 32 active teams
+let upcomingWeeks = []; // sorted list of weeks that still have an uncompleted game
+let upcomingWeekIndex = 0;
+
 function resolveTeamsMeta(teams, eloTeamNames) {
   const meta = {};
   for (const code of Object.keys(ratings.current)) {
@@ -204,6 +210,83 @@ function wireLeaderboardSort() {
       else leaderboardSort = { key, dir: key === 'name' ? 1 : -1 };
       renderLeaderboard();
     });
+  });
+}
+
+// ---------- Upcoming games ----------
+
+const ELO_HOME_FIELD_ADV = 65; // mirrors docs/elo/engine.js's HFA
+
+function eloWinProbability(homeElo, awayElo, neutral) {
+  const diff = homeElo - awayElo + (neutral ? 0 : ELO_HOME_FIELD_ADV);
+  return 1 / (Math.pow(10, -diff / 400) + 1);
+}
+
+// Maps the Elo dataset's current ratings onto docs/data/teams.json's keys
+// (e.g. OAK -> LV), same remap scripts/run-predictor-elo.mjs uses server-side.
+function currentEloByTeamsKey() {
+  const map = {};
+  for (const code of Object.keys(ratings.current)) {
+    const teamsKey = CODE_TO_TEAMS_KEY[code] || code;
+    if (teamsCurrent[teamsKey]) map[teamsKey] = ratings.current[code].elo;
+  }
+  return map;
+}
+
+function gameCardHtml(g) {
+  const home = teamsCurrent[g.home];
+  const away = teamsCurrent[g.away];
+  const homeElo = eloRatingsCurrent[g.home];
+  const awayElo = eloRatingsCurrent[g.away];
+  if (!home || !away || homeElo == null || awayElo == null) return '';
+
+  const homeProb = eloWinProbability(homeElo, awayElo, g.neutral);
+  const awayProb = 1 - homeProb;
+  const dateLabel = new Date(g.date).toLocaleString(undefined, {
+    weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit',
+  });
+
+  const teamRow = (t, prob) => `<div class="row"><span class="${prob >= 0.5 ? 'winner' : 'loser'}">${t.name}</span><span>${(prob * 100).toFixed(1)}%</span></div>`;
+
+  return `<div class="bracket-game">
+    <div class="muted" style="font-size:11px;margin-bottom:4px">${dateLabel}</div>
+    ${teamRow(away, awayProb)}
+    ${teamRow(home, homeProb)}
+  </div>`;
+}
+
+function renderUpcomingGames() {
+  const container = document.getElementById('upcoming-games');
+  const label = document.getElementById('upcoming-week-label');
+  const prevBtn = document.getElementById('upcoming-prev');
+  const nextBtn = document.getElementById('upcoming-next');
+
+  if (upcomingWeeks.length === 0) {
+    label.textContent = 'No upcoming games';
+    prevBtn.disabled = true;
+    nextBtn.disabled = true;
+    container.innerHTML = '<p class="muted">No upcoming games remaining this season.</p>';
+    return;
+  }
+
+  const week = upcomingWeeks[upcomingWeekIndex];
+  label.textContent = `Week ${week}`;
+  prevBtn.disabled = upcomingWeekIndex === 0;
+  nextBtn.disabled = upcomingWeekIndex === upcomingWeeks.length - 1;
+
+  const games = schedule.games
+    .filter((g) => g.week === week && !g.completed)
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  container.innerHTML = games.map(gameCardHtml).join('') || '<p class="muted">No games found for this week.</p>';
+}
+
+function wireUpcomingGamesNav() {
+  document.getElementById('upcoming-prev').addEventListener('click', () => {
+    if (upcomingWeekIndex > 0) { upcomingWeekIndex--; renderUpcomingGames(); }
+  });
+  document.getElementById('upcoming-next').addEventListener('click', () => {
+    if (upcomingWeekIndex < upcomingWeeks.length - 1) { upcomingWeekIndex++; renderUpcomingGames(); }
   });
 }
 
@@ -580,14 +663,19 @@ function wireChartInteractions(series, minWeek, maxWeek, xScale, yScale) {
 // ---------- Init ----------
 
 async function main() {
-  const [teams, ratingsData, eloTeamNames] = await Promise.all([
+  const [teams, ratingsData, eloTeamNames, scheduleData] = await Promise.all([
     fetch('data/teams.json').then((r) => r.json()),
     fetch('data/elo/ratings.json').then((r) => r.json()),
     fetch('data/elo/team-names.json').then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+    fetch('data/schedule.json').then((r) => r.json()),
   ]);
 
   ratings = ratingsData;
   teamsMeta = resolveTeamsMeta(teams, eloTeamNames);
+  teamsCurrent = teams;
+  schedule = scheduleData;
+  eloRatingsCurrent = currentEloByTeamsKey();
+  upcomingWeeks = [...new Set(schedule.games.filter((g) => !g.completed).map((g) => g.week))].sort((a, b) => a - b);
 
   document.getElementById('intro-text').innerHTML =
     `Every NFL game since 1920 (${ratings.gameCount.toLocaleString()} games), including AAFC (1946-49) and AFL (1960-69) games for franchises now in the NFL. ` +
@@ -595,6 +683,8 @@ async function main() {
 
   renderLeaderboard();
   wireLeaderboardSort();
+  renderUpcomingGames();
+  wireUpcomingGamesNav();
 
   // Default to the current #1 team so the chart isn't empty on first load.
   selected = [activeCodesSortedByElo()[0]];
