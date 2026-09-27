@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-26T15:55:09.489Z",
+  "updatedAt": "2026-09-27T19:59:09.929Z",
   "source": "https://site.api.espn.com/apis/fitt/v3/sports/football/nfl/powerindex?limit=1000",
   "ratings": {
     "SF": {
@@ -108,8 +108,8 @@
       "def": 0.681
     },
     "CHI": {
-      "fpi": -2.143,
-      "off": -2.576,
+      "fpi": -1.663,
+      "off": -2.096,
       "def": 0.149
     },
     "PIT": {
