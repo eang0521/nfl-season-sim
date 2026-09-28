@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-09-27T23:42:45.159Z",
+  "updatedAt": "2026-09-28T03:08:25.117Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -355,23 +355,12 @@
       "awayScore": 6
     },
     {
-      "id": "2026_03_BAL_DAL",
+      "id": "2026_03_LAR_DEN",
       "week": 3,
       "seasonType": "REG",
-      "date": "2026-09-27T20:25Z",
-      "home": "DAL",
-      "away": "BAL",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_03_LV_NO",
-      "week": 3,
-      "seasonType": "REG",
-      "date": "2026-09-27T20:25Z",
-      "home": "NO",
-      "away": "LV",
+      "date": "2026-09-28T00:20Z",
+      "home": "DEN",
+      "away": "LAR",
       "completed": false,
       "homeScore": null,
       "awayScore": null
@@ -498,15 +487,26 @@
       "awayScore": 23
     },
     {
-      "id": "2026_03_LAR_DEN",
+      "id": "2026_03_BAL_DAL",
       "week": 3,
       "seasonType": "REG",
-      "date": "2026-09-28T00:20Z",
-      "home": "DEN",
-      "away": "LAR",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "date": "2026-09-27T20:25Z",
+      "home": "DAL",
+      "away": "BAL",
+      "completed": true,
+      "homeScore": 31,
+      "awayScore": 34
+    },
+    {
+      "id": "2026_03_LV_NO",
+      "week": 3,
+      "seasonType": "REG",
+      "date": "2026-09-27T20:25Z",
+      "home": "NO",
+      "away": "LV",
+      "completed": true,
+      "homeScore": 27,
+      "awayScore": 35
     },
     {
       "id": "2026_03_ATL_GB",
