@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-09-29T02:31:25.926Z",
+  "updatedAt": "2026-09-29T03:47:04.328Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -361,9 +361,9 @@
       "date": "2026-09-29T00:15Z",
       "home": "CHI",
       "away": "PHI",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "completed": true,
+      "homeScore": 27,
+      "awayScore": 7
     },
     {
       "id": "2026_03_ATL_GB",
