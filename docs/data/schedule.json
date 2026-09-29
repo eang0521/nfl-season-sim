@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-09-29T10:19:27.823Z",
+  "updatedAt": "2026-09-29T17:46:07.368Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -729,6 +729,17 @@
       "awayScore": null
     },
     {
+      "id": "2026_05_CHI_GB",
+      "week": 5,
+      "seasonType": "REG",
+      "date": "2026-10-11T17:00Z",
+      "home": "GB",
+      "away": "CHI",
+      "completed": false,
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
       "id": "2026_05_HOU_TEN",
       "week": 5,
       "seasonType": "REG",
@@ -812,17 +823,6 @@
       "date": "2026-10-11T20:05Z",
       "home": "LAC",
       "away": "DEN",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_05_CHI_GB",
-      "week": 5,
-      "seasonType": "REG",
-      "date": "2026-10-11T20:25Z",
-      "home": "GB",
-      "away": "CHI",
       "completed": false,
       "homeScore": null,
       "awayScore": null
