@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-09-29T03:47:04.328Z",
+  "updatedAt": "2026-09-29T10:19:27.823Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -355,17 +355,6 @@
       "awayScore": 6
     },
     {
-      "id": "2026_03_PHI_CHI",
-      "week": 3,
-      "seasonType": "REG",
-      "date": "2026-09-29T00:15Z",
-      "home": "CHI",
-      "away": "PHI",
-      "completed": true,
-      "homeScore": 27,
-      "awayScore": 7
-    },
-    {
       "id": "2026_03_ATL_GB",
       "week": 3,
       "seasonType": "REG",
@@ -529,6 +518,17 @@
       "completed": true,
       "homeScore": 30,
       "awayScore": 26
+    },
+    {
+      "id": "2026_03_PHI_CHI",
+      "week": 3,
+      "seasonType": "REG",
+      "date": "2026-09-29T00:15Z",
+      "home": "CHI",
+      "away": "PHI",
+      "completed": true,
+      "homeScore": 27,
+      "awayScore": 7
     },
     {
       "id": "2026_04_PIT_CLE",
