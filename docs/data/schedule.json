@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-10-04T23:52:50.013Z",
+  "updatedAt": "2026-10-05T03:36:48.297Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -531,6 +531,17 @@
       "awayScore": 7
     },
     {
+      "id": "2026_04_DET_CAR",
+      "week": 4,
+      "seasonType": "REG",
+      "date": "2026-10-05T00:20Z",
+      "home": "CAR",
+      "away": "DET",
+      "completed": false,
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
       "id": "2026_04_IND_WSH",
       "week": 4,
       "seasonType": "REG",
@@ -672,17 +683,6 @@
       "completed": true,
       "homeScore": 30,
       "awayScore": 23
-    },
-    {
-      "id": "2026_04_DET_CAR",
-      "week": 4,
-      "seasonType": "REG",
-      "date": "2026-10-05T00:20Z",
-      "home": "CAR",
-      "away": "DET",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
     },
     {
       "id": "2026_04_PIT_CLE",
