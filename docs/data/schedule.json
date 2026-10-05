@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-10-05T03:36:48.297Z",
+  "updatedAt": "2026-10-05T11:05:51.333Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -531,15 +531,26 @@
       "awayScore": 7
     },
     {
-      "id": "2026_04_DET_CAR",
+      "id": "2026_04_ATL_NO",
       "week": 4,
       "seasonType": "REG",
-      "date": "2026-10-05T00:20Z",
-      "home": "CAR",
-      "away": "DET",
+      "date": "2026-10-06T00:15Z",
+      "home": "NO",
+      "away": "ATL",
       "completed": false,
       "homeScore": null,
       "awayScore": null
+    },
+    {
+      "id": "2026_04_PIT_CLE",
+      "week": 4,
+      "seasonType": "REG",
+      "date": "2026-10-02T00:15Z",
+      "home": "CLE",
+      "away": "PIT",
+      "completed": true,
+      "homeScore": 27,
+      "awayScore": 24
     },
     {
       "id": "2026_04_IND_WSH",
@@ -685,26 +696,15 @@
       "awayScore": 23
     },
     {
-      "id": "2026_04_PIT_CLE",
+      "id": "2026_04_DET_CAR",
       "week": 4,
       "seasonType": "REG",
-      "date": "2026-10-02T00:15Z",
-      "home": "CLE",
-      "away": "PIT",
+      "date": "2026-10-05T00:20Z",
+      "home": "CAR",
+      "away": "DET",
       "completed": true,
-      "homeScore": 27,
-      "awayScore": 24
-    },
-    {
-      "id": "2026_04_ATL_NO",
-      "week": 4,
-      "seasonType": "REG",
-      "date": "2026-10-06T00:15Z",
-      "home": "NO",
-      "away": "ATL",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 32,
+      "awayScore": 26
     },
     {
       "id": "2026_05_TB_DAL",
