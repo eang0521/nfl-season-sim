@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-10-05T23:05:24.522Z",
+  "updatedAt": "2026-10-06T04:24:57.495Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -531,17 +531,6 @@
       "awayScore": 7
     },
     {
-      "id": "2026_04_ATL_NO",
-      "week": 4,
-      "seasonType": "REG",
-      "date": "2026-10-06T00:15Z",
-      "home": "NO",
-      "away": "ATL",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
       "id": "2026_04_PIT_CLE",
       "week": 4,
       "seasonType": "REG",
@@ -705,6 +694,17 @@
       "completed": true,
       "homeScore": 32,
       "awayScore": 26
+    },
+    {
+      "id": "2026_04_ATL_NO",
+      "week": 4,
+      "seasonType": "REG",
+      "date": "2026-10-06T00:15Z",
+      "home": "NO",
+      "away": "ATL",
+      "completed": true,
+      "homeScore": 24,
+      "awayScore": 45
     },
     {
       "id": "2026_05_TB_DAL",
