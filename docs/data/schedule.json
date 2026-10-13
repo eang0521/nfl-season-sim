@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-10-12T23:32:54.617Z",
+  "updatedAt": "2026-10-13T05:03:34.934Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -707,17 +707,6 @@
       "awayScore": 45
     },
     {
-      "id": "2026_05_BUF_LAR",
-      "week": 5,
-      "seasonType": "REG",
-      "date": "2026-10-13T00:15Z",
-      "home": "LAR",
-      "away": "BUF",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
       "id": "2026_05_TB_DAL",
       "week": 5,
       "seasonType": "REG",
@@ -870,6 +859,17 @@
       "completed": true,
       "homeScore": 23,
       "awayScore": 30
+    },
+    {
+      "id": "2026_05_BUF_LAR",
+      "week": 5,
+      "seasonType": "REG",
+      "date": "2026-10-13T00:15Z",
+      "home": "LAR",
+      "away": "BUF",
+      "completed": true,
+      "homeScore": 34,
+      "awayScore": 37
     },
     {
       "id": "2026_06_SEA_DEN",
