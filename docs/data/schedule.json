@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-10-16T02:46:16.966Z",
+  "updatedAt": "2026-10-16T08:41:21.839Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -878,9 +878,9 @@
       "date": "2026-10-16T00:15Z",
       "home": "DEN",
       "away": "SEA",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "completed": true,
+      "homeScore": 17,
+      "awayScore": 14
     },
     {
       "id": "2026_06_HOU_JAX",
