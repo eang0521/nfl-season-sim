@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-17T15:05:20.928Z",
+  "updatedAt": "2026-10-18T19:20:00.009Z",
   "source": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
   "seasonsUsed": "2006-2026",
-  "gamesUsed": 5511,
+  "gamesUsed": 5512,
   "counts": {
     "0": 124,
     "2": 3,
@@ -33,10 +33,10 @@
     "28": 311,
     "29": 145,
     "30": 364,
-    "31": 500,
+    "31": 501,
     "32": 82,
     "33": 168,
-    "34": 381,
+    "34": 382,
     "35": 169,
     "36": 80,
     "37": 165,
