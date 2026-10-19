@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-10-18T22:53:42.274Z",
+  "updatedAt": "2026-10-19T00:58:07.611Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -872,34 +872,12 @@
       "awayScore": 37
     },
     {
-      "id": "2026_06_ARI_LAR",
+      "id": "2026_06_DAL_GB",
       "week": 6,
       "seasonType": "REG",
-      "date": "2026-10-18T20:05Z",
-      "home": "LAR",
-      "away": "ARI",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_06_LAC_KC",
-      "week": 6,
-      "seasonType": "REG",
-      "date": "2026-10-18T20:25Z",
-      "home": "KC",
-      "away": "LAC",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_06_BUF_LV",
-      "week": 6,
-      "seasonType": "REG",
-      "date": "2026-10-18T20:25Z",
-      "home": "LV",
-      "away": "BUF",
+      "date": "2026-10-19T00:20Z",
+      "home": "GB",
+      "away": "DAL",
       "completed": false,
       "homeScore": null,
       "awayScore": null
@@ -993,15 +971,37 @@
       "awayScore": 26
     },
     {
-      "id": "2026_06_DAL_GB",
+      "id": "2026_06_ARI_LAR",
       "week": 6,
       "seasonType": "REG",
-      "date": "2026-10-19T00:20Z",
-      "home": "GB",
-      "away": "DAL",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "date": "2026-10-18T20:05Z",
+      "home": "LAR",
+      "away": "ARI",
+      "completed": true,
+      "homeScore": 16,
+      "awayScore": 18
+    },
+    {
+      "id": "2026_06_LAC_KC",
+      "week": 6,
+      "seasonType": "REG",
+      "date": "2026-10-18T20:25Z",
+      "home": "KC",
+      "away": "LAC",
+      "completed": true,
+      "homeScore": 22,
+      "awayScore": 6
+    },
+    {
+      "id": "2026_06_BUF_LV",
+      "week": 6,
+      "seasonType": "REG",
+      "date": "2026-10-18T20:25Z",
+      "home": "LV",
+      "away": "BUF",
+      "completed": true,
+      "homeScore": 30,
+      "awayScore": 33
     },
     {
       "id": "2026_06_SEA_DEN",
