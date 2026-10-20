@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-10-20T03:02:46.300Z",
+  "updatedAt": "2026-10-20T09:03:38.278Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -872,17 +872,6 @@
       "awayScore": 37
     },
     {
-      "id": "2026_06_WSH_SF",
-      "week": 6,
-      "seasonType": "REG",
-      "date": "2026-10-20T00:15Z",
-      "home": "SF",
-      "away": "WSH",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
       "id": "2026_06_SEA_DEN",
       "week": 6,
       "seasonType": "REG",
@@ -1024,6 +1013,17 @@
       "completed": true,
       "homeScore": 23,
       "awayScore": 13
+    },
+    {
+      "id": "2026_06_WSH_SF",
+      "week": 6,
+      "seasonType": "REG",
+      "date": "2026-10-20T00:15Z",
+      "home": "SF",
+      "away": "WSH",
+      "completed": true,
+      "homeScore": 23,
+      "awayScore": 17
     },
     {
       "id": "2026_07_NE_CHI",
