@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-10-23T02:59:48.111Z",
+  "updatedAt": "2026-10-23T09:00:13.667Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -1032,9 +1032,9 @@
       "date": "2026-10-23T00:15Z",
       "home": "CHI",
       "away": "NE",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "completed": true,
+      "homeScore": 30,
+      "awayScore": 24
     },
     {
       "id": "2026_07_PIT_NO",
