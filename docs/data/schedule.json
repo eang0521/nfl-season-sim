@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-10-26T02:47:28.206Z",
+  "updatedAt": "2026-10-26T09:35:05.916Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -1026,15 +1026,26 @@
       "awayScore": 17
     },
     {
-      "id": "2026_07_KC_SEA",
+      "id": "2026_07_DAL_PHI",
       "week": 7,
       "seasonType": "REG",
-      "date": "2026-10-26T00:20Z",
-      "home": "SEA",
-      "away": "KC",
+      "date": "2026-10-27T00:15Z",
+      "home": "PHI",
+      "away": "DAL",
       "completed": false,
       "homeScore": null,
       "awayScore": null
+    },
+    {
+      "id": "2026_07_NE_CHI",
+      "week": 7,
+      "seasonType": "REG",
+      "date": "2026-10-23T00:15Z",
+      "home": "CHI",
+      "away": "NE",
+      "completed": true,
+      "homeScore": 30,
+      "awayScore": 24
     },
     {
       "id": "2026_07_PIT_NO",
@@ -1158,26 +1169,15 @@
       "awayScore": 35
     },
     {
-      "id": "2026_07_NE_CHI",
+      "id": "2026_07_KC_SEA",
       "week": 7,
       "seasonType": "REG",
-      "date": "2026-10-23T00:15Z",
-      "home": "CHI",
-      "away": "NE",
+      "date": "2026-10-26T00:20Z",
+      "home": "SEA",
+      "away": "KC",
       "completed": true,
-      "homeScore": 30,
-      "awayScore": 24
-    },
-    {
-      "id": "2026_07_DAL_PHI",
-      "week": 7,
-      "seasonType": "REG",
-      "date": "2026-10-27T00:15Z",
-      "home": "PHI",
-      "away": "DAL",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "homeScore": 20,
+      "awayScore": 3
     },
     {
       "id": "2026_08_CAR_GB",
