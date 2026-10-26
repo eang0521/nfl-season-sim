@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-10-26T09:35:05.916Z",
+  "updatedAt": "2026-10-26T21:30:23.848Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -1444,23 +1444,23 @@
       "awayScore": null
     },
     {
-      "id": "2026_09_LV_SF",
-      "week": 9,
-      "seasonType": "REG",
-      "date": "2026-11-08T21:05Z",
-      "home": "SF",
-      "away": "LV",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
       "id": "2026_09_GB_NE",
       "week": 9,
       "seasonType": "REG",
       "date": "2026-11-08T21:25Z",
       "home": "NE",
       "away": "GB",
+      "completed": false,
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
+      "id": "2026_09_LV_SF",
+      "week": 9,
+      "seasonType": "REG",
+      "date": "2026-11-08T21:25Z",
+      "home": "SF",
+      "away": "LV",
       "completed": false,
       "homeScore": null,
       "awayScore": null
