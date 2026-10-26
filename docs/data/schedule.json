@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-10-25T23:06:20.096Z",
+  "updatedAt": "2026-10-26T02:47:28.206Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -1026,34 +1026,12 @@
       "awayScore": 17
     },
     {
-      "id": "2026_07_DEN_ARI",
+      "id": "2026_07_KC_SEA",
       "week": 7,
       "seasonType": "REG",
-      "date": "2026-10-25T20:05Z",
-      "home": "ARI",
-      "away": "DEN",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_07_GB_DET",
-      "week": 7,
-      "seasonType": "REG",
-      "date": "2026-10-25T20:25Z",
-      "home": "DET",
-      "away": "GB",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_07_LAR_LV",
-      "week": 7,
-      "seasonType": "REG",
-      "date": "2026-10-25T20:25Z",
-      "home": "LV",
-      "away": "LAR",
+      "date": "2026-10-26T00:20Z",
+      "home": "SEA",
+      "away": "KC",
       "completed": false,
       "homeScore": null,
       "awayScore": null
@@ -1147,15 +1125,37 @@
       "awayScore": 27
     },
     {
-      "id": "2026_07_KC_SEA",
+      "id": "2026_07_DEN_ARI",
       "week": 7,
       "seasonType": "REG",
-      "date": "2026-10-26T00:20Z",
-      "home": "SEA",
-      "away": "KC",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "date": "2026-10-25T20:05Z",
+      "home": "ARI",
+      "away": "DEN",
+      "completed": true,
+      "homeScore": 16,
+      "awayScore": 30
+    },
+    {
+      "id": "2026_07_GB_DET",
+      "week": 7,
+      "seasonType": "REG",
+      "date": "2026-10-25T20:25Z",
+      "home": "DET",
+      "away": "GB",
+      "completed": true,
+      "homeScore": 20,
+      "awayScore": 17
+    },
+    {
+      "id": "2026_07_LAR_LV",
+      "week": 7,
+      "seasonType": "REG",
+      "date": "2026-10-25T20:25Z",
+      "home": "LV",
+      "away": "LAR",
+      "completed": true,
+      "homeScore": 21,
+      "awayScore": 35
     },
     {
       "id": "2026_07_NE_CHI",
