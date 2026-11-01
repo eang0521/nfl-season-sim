@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-10-31T16:54:40.869Z",
+  "updatedAt": "2026-11-01T21:01:35.957Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -1180,17 +1180,6 @@
       "awayScore": 38
     },
     {
-      "id": "2026_08_CAR_GB",
-      "week": 8,
-      "seasonType": "REG",
-      "date": "2026-10-30T00:15Z",
-      "home": "GB",
-      "away": "CAR",
-      "completed": true,
-      "homeScore": 27,
-      "awayScore": 19
-    },
-    {
       "id": "2026_08_BAL_BUF",
       "week": 8,
       "seasonType": "REG",
@@ -1263,9 +1252,9 @@
       "date": "2026-11-01T18:00Z",
       "home": "TB",
       "away": "ATL",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "completed": true,
+      "homeScore": 16,
+      "awayScore": 0
     },
     {
       "id": "2026_08_IND_JAX",
@@ -1321,6 +1310,17 @@
       "completed": false,
       "homeScore": null,
       "awayScore": null
+    },
+    {
+      "id": "2026_08_CAR_GB",
+      "week": 8,
+      "seasonType": "REG",
+      "date": "2026-10-30T00:15Z",
+      "home": "GB",
+      "away": "CAR",
+      "completed": true,
+      "homeScore": 27,
+      "awayScore": 19
     },
     {
       "id": "2026_08_CHI_SEA",
