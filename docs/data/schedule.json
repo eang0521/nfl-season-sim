@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-11-02T23:49:21.473Z",
+  "updatedAt": "2026-11-03T04:58:03.585Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -1186,9 +1186,9 @@
       "date": "2026-11-03T01:15Z",
       "home": "SEA",
       "away": "CHI",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "completed": true,
+      "homeScore": 17,
+      "awayScore": 34
     },
     {
       "id": "2026_08_CAR_GB",
