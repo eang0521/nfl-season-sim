@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T19:09:49.538Z",
+  "updatedAt": "2026-11-04T19:26:38.482Z",
   "source": "https://site.api.espn.com/apis/fitt/v3/sports/football/nfl/powerindex?limit=1000",
   "ratings": {
     "SF": {
@@ -113,7 +113,7 @@
       "def": -1.943
     },
     "NO": {
-      "fpi": -3.18,
+      "fpi": -3.228,
       "off": -1.505,
       "def": -1.744
     },
@@ -137,11 +137,6 @@
       "off": -2.132,
       "def": -2.468
     },
-    "CLE": {
-      "fpi": -5.152,
-      "off": -4.877,
-      "def": -0.082
-    },
     "BAL": {
       "fpi": -5.175,
       "off": -4.603,
@@ -151,6 +146,11 @@
       "fpi": -5.943,
       "off": -3.745,
       "def": -1.791
+    },
+    "CLE": {
+      "fpi": -5.947,
+      "off": -5.672,
+      "def": -0.082
     },
     "PHI": {
       "fpi": -6.31,
