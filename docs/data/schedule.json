@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-11-07T17:29:58.789Z",
+  "updatedAt": "2026-11-08T20:59:54.956Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -1334,28 +1334,6 @@
       "awayScore": 34
     },
     {
-      "id": "2026_09_JAX_BAL",
-      "week": 9,
-      "seasonType": "REG",
-      "date": "2026-11-06T01:15Z",
-      "home": "BAL",
-      "away": "JAX",
-      "completed": true,
-      "homeScore": 10,
-      "awayScore": 33
-    },
-    {
-      "id": "2026_09_CIN_ATL",
-      "week": 9,
-      "seasonType": "REG",
-      "date": "2026-11-08T14:30Z",
-      "home": "ATL",
-      "away": "CIN",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
       "id": "2026_09_DAL_IND",
       "week": 9,
       "seasonType": "REG",
@@ -1384,9 +1362,9 @@
       "date": "2026-11-08T18:00Z",
       "home": "MIA",
       "away": "DET",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "completed": true,
+      "homeScore": 9,
+      "awayScore": 19
     },
     {
       "id": "2026_09_CLE_NO",
@@ -1431,6 +1409,17 @@
       "completed": false,
       "homeScore": null,
       "awayScore": null
+    },
+    {
+      "id": "2026_09_CIN_ATL",
+      "week": 9,
+      "seasonType": "REG",
+      "date": "2026-11-08T14:30Z",
+      "home": "ATL",
+      "away": "CIN",
+      "completed": true,
+      "homeScore": 17,
+      "awayScore": 34
     },
     {
       "id": "2026_09_HOU_LAC",
@@ -1486,6 +1475,17 @@
       "completed": false,
       "homeScore": null,
       "awayScore": null
+    },
+    {
+      "id": "2026_09_JAX_BAL",
+      "week": 9,
+      "seasonType": "REG",
+      "date": "2026-11-06T01:15Z",
+      "home": "BAL",
+      "away": "JAX",
+      "completed": true,
+      "homeScore": 10,
+      "awayScore": 33
     },
     {
       "id": "2026_09_BUF_MIN",
