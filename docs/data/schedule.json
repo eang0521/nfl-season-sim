@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-11-09T00:46:07.881Z",
+  "updatedAt": "2026-11-09T04:10:42.806Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -1334,6 +1334,17 @@
       "awayScore": 34
     },
     {
+      "id": "2026_09_TB_CHI",
+      "week": 9,
+      "seasonType": "REG",
+      "date": "2026-11-09T01:20Z",
+      "home": "CHI",
+      "away": "TB",
+      "completed": false,
+      "homeScore": null,
+      "awayScore": null
+    },
+    {
       "id": "2026_09_CIN_ATL",
       "week": 9,
       "seasonType": "REG",
@@ -1464,17 +1475,6 @@
       "completed": true,
       "homeScore": 17,
       "awayScore": 3
-    },
-    {
-      "id": "2026_09_TB_CHI",
-      "week": 9,
-      "seasonType": "REG",
-      "date": "2026-11-09T01:20Z",
-      "home": "CHI",
-      "away": "TB",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
     },
     {
       "id": "2026_09_JAX_BAL",
