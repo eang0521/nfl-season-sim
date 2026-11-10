@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-11-10T00:36:10.004Z",
+  "updatedAt": "2026-11-10T05:39:59.082Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -1334,17 +1334,6 @@
       "awayScore": 34
     },
     {
-      "id": "2026_09_BUF_MIN",
-      "week": 9,
-      "seasonType": "REG",
-      "date": "2026-11-10T01:15Z",
-      "home": "MIN",
-      "away": "BUF",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
       "id": "2026_09_JAX_BAL",
       "week": 9,
       "seasonType": "REG",
@@ -1497,6 +1486,17 @@
       "completed": true,
       "homeScore": 27,
       "awayScore": 24
+    },
+    {
+      "id": "2026_09_BUF_MIN",
+      "week": 9,
+      "seasonType": "REG",
+      "date": "2026-11-10T01:15Z",
+      "home": "MIN",
+      "away": "BUF",
+      "completed": true,
+      "homeScore": 6,
+      "awayScore": 23
     },
     {
       "id": "2026_10_WSH_NYG",
