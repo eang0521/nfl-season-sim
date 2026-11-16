@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-11-15T21:33:19.239Z",
+  "updatedAt": "2026-11-16T02:38:23.544Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -1499,34 +1499,12 @@
       "awayScore": 23
     },
     {
-      "id": "2026_10_SEA_LV",
+      "id": "2026_10_PIT_CIN",
       "week": 10,
       "seasonType": "REG",
-      "date": "2026-11-15T21:05Z",
-      "home": "LV",
-      "away": "SEA",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_10_LAR_ARI",
-      "week": 10,
-      "seasonType": "REG",
-      "date": "2026-11-15T21:05Z",
-      "home": "ARI",
-      "away": "LAR",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_10_SF_DAL",
-      "week": 10,
-      "seasonType": "REG",
-      "date": "2026-11-15T21:25Z",
-      "home": "DAL",
-      "away": "SF",
+      "date": "2026-11-16T01:20Z",
+      "home": "CIN",
+      "away": "PIT",
       "completed": false,
       "homeScore": null,
       "awayScore": null
@@ -1620,15 +1598,37 @@
       "awayScore": 31
     },
     {
-      "id": "2026_10_PIT_CIN",
+      "id": "2026_10_SEA_LV",
       "week": 10,
       "seasonType": "REG",
-      "date": "2026-11-16T01:20Z",
-      "home": "CIN",
-      "away": "PIT",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "date": "2026-11-15T21:05Z",
+      "home": "LV",
+      "away": "SEA",
+      "completed": true,
+      "homeScore": 13,
+      "awayScore": 21
+    },
+    {
+      "id": "2026_10_LAR_ARI",
+      "week": 10,
+      "seasonType": "REG",
+      "date": "2026-11-15T21:05Z",
+      "home": "ARI",
+      "away": "LAR",
+      "completed": true,
+      "homeScore": 6,
+      "awayScore": 34
+    },
+    {
+      "id": "2026_10_SF_DAL",
+      "week": 10,
+      "seasonType": "REG",
+      "date": "2026-11-15T21:25Z",
+      "home": "DAL",
+      "away": "SF",
+      "completed": true,
+      "homeScore": 40,
+      "awayScore": 46
     },
     {
       "id": "2026_10_WSH_NYG",
