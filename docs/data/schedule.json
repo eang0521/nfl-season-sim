@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-11-19T23:26:55.697Z",
+  "updatedAt": "2026-11-20T05:22:37.771Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -1659,9 +1659,9 @@
       "date": "2026-11-20T01:15Z",
       "home": "HOU",
       "away": "IND",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
+      "completed": true,
+      "homeScore": 26,
+      "awayScore": 3
     },
     {
       "id": "2026_11_MIA_BUF",
