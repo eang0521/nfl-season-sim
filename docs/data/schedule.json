@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "updatedAt": "2026-11-25T21:10:17.471Z",
+  "updatedAt": "2026-11-27T00:58:08.214Z",
   "games": [
     {
       "id": "2026_01_NE_SEA",
@@ -1796,28 +1796,6 @@
       "awayScore": 20
     },
     {
-      "id": "2026_12_GB_LAR",
-      "week": 12,
-      "seasonType": "REG",
-      "date": "2026-11-26T01:00Z",
-      "home": "LAR",
-      "away": "GB",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
-      "id": "2026_12_CHI_DET",
-      "week": 12,
-      "seasonType": "REG",
-      "date": "2026-11-26T18:00Z",
-      "home": "DET",
-      "away": "CHI",
-      "completed": false,
-      "homeScore": null,
-      "awayScore": null
-    },
-    {
       "id": "2026_12_PHI_DAL",
       "week": 12,
       "seasonType": "REG",
@@ -1829,6 +1807,17 @@
       "awayScore": null
     },
     {
+      "id": "2026_12_CHI_DET",
+      "week": 12,
+      "seasonType": "REG",
+      "date": "2026-11-26T18:00Z",
+      "home": "DET",
+      "away": "CHI",
+      "completed": true,
+      "homeScore": 35,
+      "awayScore": 39
+    },
+    {
       "id": "2026_12_KC_BUF",
       "week": 12,
       "seasonType": "REG",
@@ -1838,6 +1827,17 @@
       "completed": false,
       "homeScore": null,
       "awayScore": null
+    },
+    {
+      "id": "2026_12_GB_LAR",
+      "week": 12,
+      "seasonType": "REG",
+      "date": "2026-11-26T01:00Z",
+      "home": "LAR",
+      "away": "GB",
+      "completed": true,
+      "homeScore": 26,
+      "awayScore": 13
     },
     {
       "id": "2026_12_DEN_PIT",
